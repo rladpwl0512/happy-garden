@@ -15,7 +15,10 @@
     "react-native": "0.71.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@expo/webpack-config": "^18.0.3",
+    "react-dom": "^18.2.0",
+    "react-native-web": "^0.18.12"
   },
   "private": true
 }
