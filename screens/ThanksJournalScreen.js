@@ -72,7 +72,7 @@ function ThanksJournalScreen({ navigation }) {
 
       <Pressable
         style={styles.nextButton}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("JournalFeedback")}
       >
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
