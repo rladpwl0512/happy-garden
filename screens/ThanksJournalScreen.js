@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   },
 
   thanksSection: {
+    marginTop: 10,
     marginBottom: 30,
   },
 
