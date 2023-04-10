@@ -9,14 +9,20 @@ import {
   Image,
 } from "react-native";
 import colors from "../styles/theme";
-import { Ionicons } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
+import { Ionicons, Entypo } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
 
 function ThanksJournalScreen({ navigation }) {
-  const [thanks, setThanks] = useState(["", "", "", "", "", ""]);
+  const [thanks, setThanks] = useState([""]);
   console.log(thanks);
 
   const addThanksInput = () => {
     setThanks([...thanks, ""]);
+  };
+
+  const updateThanks = (idx, text) => {
+    const newThanks = [...thanks];
+    newThanks[idx] = text;
+    setThanks(newThanks);
   };
 
   return (
@@ -66,12 +72,16 @@ function ThanksJournalScreen({ navigation }) {
                   style={[styles.ThanksInput, styles.normal]}
                   placeholder="행복했던 일을 기록해보세요"
                   value={value}
-                  onChangeText={(text) => {
-                    const newThanks = [...thanks]; // Create a copy of the array
-                    newThanks[idx] = text; // Update the corresponding element
-                    setThanks(newThanks); // Update the state with the new array
-                  }}
+                  onChangeText={(text) => updateThanks(idx, text)}
                 />
+                <Pressable>
+                  <Entypo
+                    name="minus"
+                    size={20}
+                    color={colors.GRAY_500}
+                    style={styles.minusIcon}
+                  />
+                </Pressable>
               </View>
             ))}
           </ScrollView>
@@ -140,10 +150,16 @@ const styles = StyleSheet.create({
 
   inputSection: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: colors.PRIMARY_50,
     borderRadius: 24,
     padding: 5,
     marginTop: 10,
+  },
+
+  minusIcon: {
+    marginRight: 10,
   },
 
   // TODO: input 안에서 자동으로 채워지도록 설정하기 (지금처럼 고정 이미지 크기 x)
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
 
   ThanksInput: {
     backgroundColor: colors.PRIMARY_50,
-    // padding: 20,
+    width: "60%", //TODO: 이 방식으로 한다면, happyimage, minusicon 모두 width를 %로?
   },
 
   nextButton: {
