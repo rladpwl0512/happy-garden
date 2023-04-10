@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import colors from "../styles/theme";
 
@@ -6,12 +5,11 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.writeDiaryButton}
+        style={styles.writeJournalButton}
         onPress={() => navigation.navigate("MoodJournal")}
       >
         <Text>일기 작성</Text>
       </Pressable>
-      <StatusBar style="light" />
     </View>
   );
 }
@@ -19,11 +17,12 @@ function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.WHITE,
     alignItems: "center",
     justifyContent: "center",
   },
-  writeDiaryButton: {
+
+  writeJournalButton: {
     alignItems: "center",
     justifyContent: "center",
     width: 100,
