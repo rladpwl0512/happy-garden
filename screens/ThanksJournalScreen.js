@@ -97,7 +97,7 @@ function ThanksJournalScreen({ navigation }) {
 
       <Pressable
         style={styles.nextButton}
-        // onPress={() => navigation.navigate("JournalFeedback")}
+        onPress={() => navigation.navigate("JournalFeedback")}
       >
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
@@ -106,7 +106,7 @@ function ThanksJournalScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  // 공통적으로 뺄 수 있는 것 뺄 수 있는가? (normal, point, container 같은 스타일들 export 해서 import 방식으로 다양한 파일에서 사용할 수 있도록)
+  // TODO: 공통적으로 뺄 수 있는 것 뺄 수 있는가? (normal, point, container 같은 스타일들 export 해서 import 방식으로 다양한 파일에서 사용할 수 있도록)
   normal: {
     fontFamily: "normal",
     fontSize: 20,
