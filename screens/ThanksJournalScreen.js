@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons"; // TODO: header 반복되는 부�
 
 function ThanksJournalScreen({ navigation }) {
   const [thanks, setThanks] = useState(["", "", "", "", "", ""]);
+  console.log(thanks);
 
   const addThanksInput = () => {
     setThanks([...thanks, ""]);
@@ -54,8 +55,9 @@ function ThanksJournalScreen({ navigation }) {
               this.scrollView.scrollToEnd({ animated: true })
             }
           >
-            {thanks.map(() => (
-              <View style={styles.inputSection}>
+            {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
+            {thanks.map((value, idx) => (
+              <View style={styles.inputSection} key={idx}>
                 <Image
                   style={styles.happyImage}
                   source={require("../assets/mood/happy.png")}
@@ -63,6 +65,12 @@ function ThanksJournalScreen({ navigation }) {
                 <TextInput
                   style={[styles.ThanksInput, styles.normal]}
                   placeholder="행복했던 일을 기록해보세요"
+                  value={value}
+                  onChangeText={(text) => {
+                    const newThanks = [...thanks]; // Create a copy of the array
+                    newThanks[idx] = text; // Update the corresponding element
+                    setThanks(newThanks); // Update the state with the new array
+                  }}
                 />
               </View>
             ))}
@@ -72,7 +80,7 @@ function ThanksJournalScreen({ navigation }) {
 
       <Pressable
         style={styles.nextButton}
-        onPress={() => navigation.navigate("JournalFeedback")}
+        // onPress={() => navigation.navigate("JournalFeedback")}
       >
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
