@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   },
 
   grayText: {
-    fontSize: 20,
     color: colors.GRAY_500,
   },
 

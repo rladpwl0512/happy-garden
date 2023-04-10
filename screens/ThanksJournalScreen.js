@@ -1,9 +1,23 @@
-import React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  ScrollView,
+  Image,
+} from "react-native";
 import colors from "../styles/theme";
 import { Ionicons } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
 
 function ThanksJournalScreen({ navigation }) {
+  const [thanks, setThanks] = useState(["", "", "", "", "", ""]);
+
+  const addThanksInput = () => {
+    setThanks([...thanks, ""]);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -14,7 +28,46 @@ function ThanksJournalScreen({ navigation }) {
           <Text style={styles.point}>2023년 3월 15일 (수)</Text>
         </View>
 
-        <View style={styles.content}></View>
+        <View style={styles.content}>
+          {/* title */}
+          <View style={styles.title}>
+            <Text style={styles.normal}>
+              오늘 하루 있었던 감사했던 일을 기록해보세요.
+            </Text>
+            <Text style={[styles.grayText, styles.normal]}>
+              감사했던 일, 행복했던 일 ... 모두 좋아요 :)
+            </Text>
+          </View>
+
+          <Pressable onPress={addThanksInput}>
+            <Text style={[styles.normal, styles.addButtonText]}>
+              + 행복 추가
+            </Text>
+          </Pressable>
+
+          <ScrollView
+            style={styles.thanksSection}
+            ref={(ref) => {
+              this.scrollView = ref;
+            }}
+            onContentSizeChange={() =>
+              this.scrollView.scrollToEnd({ animated: true })
+            }
+          >
+            {thanks.map(() => (
+              <View style={styles.inputSection}>
+                <Image
+                  style={styles.happyImage}
+                  source={require("../assets/mood/happy.png")}
+                />
+                <TextInput
+                  style={[styles.ThanksInput, styles.normal]}
+                  placeholder="행복했던 일을 기록해보세요"
+                />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </View>
 
       <Pressable
@@ -39,6 +92,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
+  grayText: {
+    color: colors.GRAY_500,
+  },
+
   container: {
     flex: 1,
     marginTop: 44,
@@ -47,6 +104,10 @@ const styles = StyleSheet.create({
   top: {
     flex: 9,
     marginHorizontal: 24,
+  },
+
+  title: {
+    marginBottom: 24,
   },
 
   header: {
@@ -58,6 +119,33 @@ const styles = StyleSheet.create({
 
   content: {
     flex: 10,
+  },
+
+  thanksSection: {
+    marginBottom: 30,
+  },
+
+  addButtonText: {
+    textAlign: "right",
+  },
+
+  inputSection: {
+    flexDirection: "row",
+    backgroundColor: colors.PRIMARY_50,
+    borderRadius: 24,
+    padding: 5,
+    marginTop: 10,
+  },
+
+  // TODO: input 안에서 자동으로 채워지도록 설정하기 (지금처럼 고정 이미지 크기 x)
+  happyImage: {
+    width: 70,
+    height: 70,
+  },
+
+  ThanksInput: {
+    backgroundColor: colors.PRIMARY_50,
+    // padding: 20,
   },
 
   nextButton: {
