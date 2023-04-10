@@ -1,16 +1,16 @@
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import colors from "../styles/theme";
-import { Ionicons } from "@expo/vector-icons"; // TODO: header 반복되는 부
+import { AntDesign } from "@expo/vector-icons";
 
 function JournalFeedbackScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={styles.header}>
-          <Pressable onPress={() => navigation.navigate("ThanksJournal")}>
-            <Ionicons name="chevron-back" size={24} color="black" />
+          <Pressable onPress={() => navigation.navigate("Home")}>
+            <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={styles.point}>2023년 3월 15일 (수)</Text>
+          <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
         </View>
 
         <View style={styles.content}>
@@ -59,9 +59,16 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    flex: 1,
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    padding: 10,
+    marginBottom: 20,
+  },
+
+  date: {
+    textAlign: "center",
+    flex: 1,
   },
 
   content: {
