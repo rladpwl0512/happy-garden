@@ -25,6 +25,12 @@ function ThanksJournalScreen({ navigation }) {
     setThanks(newThanks);
   };
 
+  const deleteThanksItem = (idx) => {
+    const newThanks = [...thanks];
+    newThanks.splice(idx, 1);
+    setThanks(newThanks);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -74,7 +80,8 @@ function ThanksJournalScreen({ navigation }) {
                   value={value}
                   onChangeText={(text) => updateThanks(idx, text)}
                 />
-                <Pressable>
+                {/* TODO: thanks, thanksitem? 변수명  */}
+                <Pressable onPress={() => deleteThanksItem(idx)}>
                   <Entypo
                     name="minus"
                     size={20}
