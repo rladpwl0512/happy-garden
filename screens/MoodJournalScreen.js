@@ -15,13 +15,10 @@ function MoodJournalScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={styles.header}>
-          <Pressable
-            style={styles.prevButton}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <Pressable onPress={() => navigation.navigate("Home")}>
             <Ionicons name="chevron-back" size={24} color="black" />
           </Pressable>
-          <Text style={[styles.date, styles.point]}>2023년 3월 15일 (수)</Text>
+          <Text style={styles.point}>2023년 3월 15일 (수)</Text>
         </View>
 
         <View style={styles.content}>

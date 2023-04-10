@@ -23,7 +23,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="MoodJournal"
+        initialRouteName="ThanksJournal"
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />
