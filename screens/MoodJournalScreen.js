@@ -77,7 +77,10 @@ function MoodJournalScreen({ navigation }) {
         </View>
       </View>
 
-      <Pressable style={styles.nextButton}>
+      <Pressable
+        style={styles.nextButton}
+        onPress={() => navigation.navigate("ThanksJournal")}
+      >
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
     </View>
