@@ -22,42 +22,45 @@ function MoodJournalScreen({ navigation }) {
         </View>
 
         <View style={styles.journalsSection}>
-          <View style={styles.moodArea}>
+          <View style={styles.moodJournalSection}>
             <Text style={[styles.grayText, styles.normal]}>
               안녕하세요 예지님,
             </Text>
             <Text style={styles.normal}>오늘 하루 어땠어요?</Text>
+
             <View style={styles.moods}>
-              <Pressable>
-                <Image
-                  style={styles.moodImage}
-                  source={require("../assets/mood/happy.png")}
-                />
-              </Pressable>
-              <Pressable>
-                <Image
-                  style={styles.moodImage}
-                  source={require("../assets/mood/normal.png")}
-                />
-              </Pressable>
-              <Pressable>
-                <Image
-                  style={styles.moodImage}
-                  source={require("../assets/mood/angry.png")}
-                />
-              </Pressable>
-              <Pressable>
-                <Image
-                  style={styles.moodImage}
-                  source={require("../assets/mood/sad.png")}
-                />
-              </Pressable>
-              <Pressable>
-                <Image
-                  style={styles.moodImage}
-                  source={require("../assets/mood/tired.png")}
-                />
-              </Pressable>
+              <View style={styles.moodRow}>
+                <Pressable style={styles.moodButton}>
+                  <Image
+                    style={styles.moodImage}
+                    source={require("../assets/mood/happy.png")}
+                  />
+                </Pressable>
+                <Pressable style={styles.moodButton}>
+                  <Image
+                    style={styles.moodImage}
+                    source={require("../assets/mood/normal.png")}
+                  />
+                </Pressable>
+                <Pressable style={styles.moodButton}>
+                  <Image
+                    style={styles.moodImage}
+                    source={require("../assets/mood/angry.png")}
+                  />
+                </Pressable>
+                <Pressable style={styles.moodButton}>
+                  <Image
+                    style={styles.moodImage}
+                    source={require("../assets/mood/sad.png")}
+                  />
+                </Pressable>
+                <Pressable style={styles.moodButton}>
+                  <Image
+                    style={styles.moodImage}
+                    source={require("../assets/mood/tired.png")}
+                  />
+                </Pressable>
+              </View>
             </View>
           </View>
 
@@ -139,20 +142,32 @@ const styles = StyleSheet.create({
     color: colors.WHITE,
   },
 
-  moodArea: {
+  moodJournalSection: {
     flex: 3,
   },
 
   moods: {
     flexDirection: "row",
-    marginVertical: 24,
-    gap: 8,
     justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 24,
+  },
+
+  moodRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+
+  moodButton: {
+    flex: 1,
   },
 
   moodImage: {
-    width: 70,
-    height: 70,
+    width: "100%",
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: "contain",
   },
 
   journalTitle: {
