@@ -6,10 +6,17 @@ import {
   TextInput,
   Image,
 } from "react-native";
+import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 
 function MoodJournalScreen({ navigation }) {
+  const [selectedMood, setSelectedMood] = useState("");
+
+  const handleSelectedMood = (mood) => {
+    setSelectedMood(mood);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -30,33 +37,63 @@ function MoodJournalScreen({ navigation }) {
 
             <View style={styles.moods}>
               <View style={styles.moodRow}>
-                <Pressable style={styles.moodButton}>
+                <Pressable
+                  style={styles.moodButton}
+                  onPress={() => handleSelectedMood("happy")}
+                >
                   <Image
-                    style={styles.moodImage}
+                    style={[
+                      styles.moodImage,
+                      selectedMood !== "happy" && styles.blur,
+                    ]}
                     source={require("../assets/mood/happy.png")}
                   />
                 </Pressable>
-                <Pressable style={styles.moodButton}>
+                <Pressable
+                  style={styles.moodButton}
+                  onPress={() => handleSelectedMood("normal")}
+                >
                   <Image
-                    style={styles.moodImage}
+                    style={[
+                      styles.moodImage,
+                      selectedMood !== "normal" && styles.blur,
+                    ]}
                     source={require("../assets/mood/normal.png")}
                   />
                 </Pressable>
-                <Pressable style={styles.moodButton}>
+                <Pressable
+                  style={styles.moodButton}
+                  onPress={() => handleSelectedMood("angry")}
+                >
                   <Image
-                    style={styles.moodImage}
+                    style={[
+                      styles.moodImage,
+                      selectedMood !== "angry" && styles.blur,
+                    ]}
                     source={require("../assets/mood/angry.png")}
                   />
                 </Pressable>
-                <Pressable style={styles.moodButton}>
+                <Pressable
+                  style={styles.moodButton}
+                  onPress={() => handleSelectedMood("sad")}
+                >
                   <Image
-                    style={styles.moodImage}
+                    style={[
+                      styles.moodImage,
+                      selectedMood !== "sad" && styles.blur,
+                    ]}
                     source={require("../assets/mood/sad.png")}
                   />
                 </Pressable>
-                <Pressable style={styles.moodButton}>
+                <Pressable
+                  style={styles.moodButton}
+                  onPress={() => handleSelectedMood("tired")}
+                >
                   <Image
-                    style={styles.moodImage}
+                    style={[
+                      styles.moodImage,
+                      selectedMood !== "tired" && styles.blur,
+                    ]}
                     source={require("../assets/mood/tired.png")}
                   />
                 </Pressable>
@@ -185,6 +222,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 20, //TODO: 패딩에 top이 안먹음. 다시 보기
     marginVertical: 24,
+  },
+
+  blur: {
+    opacity: 0.5,
   },
 });
 
