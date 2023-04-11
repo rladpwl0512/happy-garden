@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -8,14 +7,14 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import colors from "../styles/theme";
+import React, { useState } from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
+import colors from "../styles/theme";
 
 function ThanksJournalScreen({ navigation }) {
   const [thanks, setThanks] = useState([""]);
-  console.log(thanks);
 
-  const addThanksInput = () => {
+  const addThanksItem = () => {
     setThanks([...thanks, ""]);
   };
 
@@ -33,17 +32,16 @@ function ThanksJournalScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.top}>
+      <View style={styles.content}>
         <View style={styles.header}>
-          <Pressable onPress={() => navigation.navigate("Home")}>
+          <Pressable onPress={() => navigation.navigate("MoodJournal")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
           <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
         </View>
 
-        <View style={styles.content}>
-          {/* title */}
-          <View style={styles.title}>
+        <View style={styles.journalSection}>
+          <View style={styles.journalTitle}>
             <Text style={styles.normal}>
               오늘 하루 있었던 감사했던 일을 기록해보세요.
             </Text>
@@ -52,7 +50,7 @@ function ThanksJournalScreen({ navigation }) {
             </Text>
           </View>
 
-          <Pressable onPress={addThanksInput}>
+          <Pressable onPress={addThanksItem}>
             <Text style={[styles.normal, styles.addButtonText]}>
               + 행복 추가
             </Text>
@@ -69,18 +67,17 @@ function ThanksJournalScreen({ navigation }) {
           >
             {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
             {thanks.map((value, idx) => (
-              <View style={styles.inputSection} key={idx}>
+              <View style={styles.thanksItemContainer} key={idx}>
                 <Image
                   style={styles.happyImage}
                   source={require("../assets/mood/happy.png")}
                 />
                 <TextInput
-                  style={[styles.ThanksInput, styles.normal]}
+                  style={[styles.ThanksItemInput, styles.normal]}
                   placeholder="행복했던 일을 기록해보세요"
                   value={value}
                   onChangeText={(text) => updateThanks(idx, text)}
                 />
-                {/* TODO: thanks, thanksitem? 변수명  */}
                 <Pressable onPress={() => deleteThanksItem(idx)}>
                   <Entypo
                     name="minus"
@@ -126,12 +123,12 @@ const styles = StyleSheet.create({
     marginTop: 44,
   },
 
-  top: {
+  content: {
     flex: 9,
     marginHorizontal: 24,
   },
 
-  title: {
+  journalTitle: {
     marginBottom: 24,
   },
 
@@ -148,7 +145,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  content: {
+  journalSection: {
     flex: 10,
   },
 
@@ -161,7 +158,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
 
-  inputSection: {
+  thanksItemContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -181,7 +178,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
 
-  ThanksInput: {
+  ThanksItemInput: {
     backgroundColor: colors.PRIMARY_50,
     width: "60%", //TODO: 이 방식으로 한다면, happyimage, minusicon 모두 width를 %로?
   },
