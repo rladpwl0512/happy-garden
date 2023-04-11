@@ -101,12 +101,12 @@ function MoodJournalScreen({ navigation }) {
             </View>
           </View>
 
-          <View style={styles.journalArea}>
-            <Text style={[styles.normal, styles.journalTitle]}>
+          <View style={styles.writingJournalSection}>
+            <Text style={[styles.normal, styles.writingJournalTitle]}>
               예지님의 하루를 기록해보세요
             </Text>
             <TextInput
-              style={[styles.journalInput, styles.normal]}
+              style={[styles.writingJournalInput, styles.normal]}
               multiline
               placeholder="오늘 하루 어떻게 지냈어요?"
             ></TextInput>
@@ -207,15 +207,15 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 
-  journalTitle: {
+  writingJournalTitle: {
     marginTop: 20,
   },
 
-  journalArea: {
+  writingJournalSection: {
     flex: 7,
   },
 
-  journalInput: {
+  writingJournalInput: {
     flex: 1,
     backgroundColor: colors.PRIMARY_50,
     borderRadius: 16,
