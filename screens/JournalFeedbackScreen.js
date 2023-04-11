@@ -1,11 +1,11 @@
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
-import colors from "../styles/theme";
 import { AntDesign } from "@expo/vector-icons";
+import colors from "../styles/theme";
 
 function JournalFeedbackScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={styles.top}>
+      <View style={styles.content}>
         <View style={styles.header}>
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
@@ -13,7 +13,7 @@ function JournalFeedbackScreen({ navigation }) {
           <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
         </View>
 
-        <View style={styles.content}>
+        <View style={styles.journalFeedbackSection}>
           <Image
             style={styles.happyImage}
             source={require("../assets/mood/happy.png")}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginTop: 44,
   },
 
-  top: {
+  content: {
     flex: 9,
     marginHorizontal: 24,
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  content: {
+  journalFeedbackSection: {
     flex: 10,
     justifyContent: "center",
     alignItems: "center",
