@@ -6,7 +6,7 @@ function SplashScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("Home");
-    }, 5000);
+    }, 3000);
   }, []);
 
   return (

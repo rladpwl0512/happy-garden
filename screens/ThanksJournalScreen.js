@@ -73,7 +73,7 @@ function ThanksJournalScreen({ navigation }) {
                   source={require("../assets/mood/happy.png")}
                 />
                 <TextInput
-                  style={[styles.ThanksItemInput, styles.normal]}
+                  style={[styles.thanksItemInput, styles.normal]}
                   placeholder="행복했던 일을 기록해보세요"
                   value={value}
                   onChangeText={(text) => updateThanks(idx, text)}
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
 
-  ThanksItemInput: {
+  thanksItemInput: {
     backgroundColor: colors.PRIMARY_50,
     width: "60%", //TODO: 이 방식으로 한다면, happyimage, minusicon 모두 width를 %로?
   },

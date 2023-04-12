@@ -8,6 +8,7 @@ import MoodJournalScreen from "./screens/MoodJournalScreen";
 import ThanksJournalScreen from "./screens/ThanksJournalScreen";
 import JournalFeedbackScreen from "./screens/JournalFeedbackScreen";
 import SplashScreen from "./screens/SplashScreen";
+import JournalRecordScreen from "./screens/JournalRecordScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Splash"
+        initialRouteName="JournalRecord"
       >
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
@@ -35,6 +36,7 @@ export default function App() {
           name="JournalFeedback"
           component={JournalFeedbackScreen}
         />
+        <Stack.Screen name="JournalRecord" component={JournalRecordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   ) : (

@@ -6,6 +6,7 @@ const colors = {
   BLACK: "#000",
   WHITE: "#fff",
   GRAY_500: "#9E9E9E",
+  GRAY_300: "#E0E0E0",
 };
 
 export default colors;
