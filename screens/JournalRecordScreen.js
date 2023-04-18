@@ -81,6 +81,7 @@ function JournalRecordScreen({ navigation }) {
                 예지님의 하루 기록이예요.
               </Text>
               <TextInput
+                editable={false}
                 style={[styles.writingJournalInput, styles.normal]}
                 multiline
                 placeholder="오늘 하루 어떻게 지냈어요?"
@@ -102,6 +103,7 @@ function JournalRecordScreen({ navigation }) {
                     source={require("../assets/mood/happy.png")}
                   />
                   <TextInput
+                    editable={false}
                     style={[styles.thanksItemInput, styles.normal]}
                     placeholder="행복했던 일을 기록해보세요"
                     value={value}
