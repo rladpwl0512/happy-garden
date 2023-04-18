@@ -14,7 +14,14 @@ import CustomModal from "../components/CustomModal";
 
 function JournalRecordScreen({ navigation }) {
   const [thanks, setThanks] = useState(["a", "b", "c", "d", "e"]);
-  const closeDeleteModal = () => {};
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showDeleteModal = () => {
+    setIsModalVisible(true);
+  };
+  const closeDeleteModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -98,7 +105,6 @@ function JournalRecordScreen({ navigation }) {
                     style={[styles.thanksItemInput, styles.normal]}
                     placeholder="행복했던 일을 기록해보세요"
                     value={value}
-                    onChangeText={(text) => greenButtonThanks(idx, text)}
                   />
                 </View>
               ))}
@@ -122,7 +128,7 @@ function JournalRecordScreen({ navigation }) {
             </View>
           </View>
         </ScrollView>
-        <CustomModal visible={true} onClose={() => {}}>
+        <CustomModal visible={isModalVisible} onClose={closeDeleteModal}>
           <Image
             style={[styles.modalImage]}
             source={require("../assets/mood/tired.png")}
@@ -134,7 +140,10 @@ function JournalRecordScreen({ navigation }) {
             </Text>
           </View>
           <View style={styles.modalButtons}>
-            <Pressable style={[styles.modalButton, styles.grayButton]}>
+            <Pressable
+              style={[styles.modalButton, styles.grayButton]}
+              onPress={closeDeleteModal}
+            >
               <Text style={[styles.buttonText, styles.point]}>취소</Text>
             </Pressable>
 
@@ -146,7 +155,10 @@ function JournalRecordScreen({ navigation }) {
       </View>
 
       <View style={styles.buttons}>
-        <Pressable style={[styles.button, styles.grayButton]}>
+        <Pressable
+          style={[styles.button, styles.grayButton]}
+          onPress={showDeleteModal}
+        >
           <Text style={[styles.buttonText, styles.point]}>삭제하기</Text>
         </Pressable>
 

@@ -7,8 +7,6 @@ import colors from "../styles/theme";
 const CustomModal = ({
   visible,
   onClose,
-  title,
-  content,
   width = 300,
   height = 300,
   children,
@@ -21,7 +19,7 @@ const CustomModal = ({
         <TouchableOpacity style={styles.absolute} onPress={() => onClose()} />
       </BlurView>
       <View style={styles.container}>
-        <View style={[styles.modal, { width, height }]}>
+        <View style={[styles.modal]}>
           <TouchableOpacity
             onPress={() => onClose()}
             style={styles.closeButton}
@@ -49,9 +47,10 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#fff",
     borderRadius: 8,
-    padding: 16,
+    padding: 20,
     alignItems: "center",
     justifyContent: "center",
+    margin: 20,
   },
   closeButton: {
     position: "absolute",
