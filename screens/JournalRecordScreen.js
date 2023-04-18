@@ -7,12 +7,14 @@ import {
   TextInput,
   Image,
 } from "react-native";
+import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
-import { useState } from "react";
+import CustomModal from "../components/CustomModal";
 
 function JournalRecordScreen({ navigation }) {
   const [thanks, setThanks] = useState(["a", "b", "c", "d", "e"]);
+  const closeDeleteModal = () => {};
 
   return (
     <View style={styles.container}>
@@ -25,17 +27,10 @@ function JournalRecordScreen({ navigation }) {
           <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
         </View>
 
-        <ScrollView
-          ref={(ref) => {
-            this.scrollView = ref;
-          }}
-          onContentSizeChange={() =>
-            this.scrollView.scrollToEnd({ animated: true })
-          }
-        >
+        <ScrollView>
           <View style={styles.journalsSection}>
             <View style={styles.moodJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalTitle]}>
+              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
                 예지님이 이날 느낀 감정이예요.{" "}
               </Text>
               <View style={styles.moods}>
@@ -75,7 +70,7 @@ function JournalRecordScreen({ navigation }) {
             </View>
 
             <View style={styles.writingJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalTitle]}>
+              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
                 예지님의 하루 기록이예요.
               </Text>
               <TextInput
@@ -90,7 +85,7 @@ function JournalRecordScreen({ navigation }) {
 
             {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
             <View style={styles.thanksJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalTitle]}>
+              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
                 예지님의 5번의 행복을 느낀 날이예요.
               </Text>
               {thanks.map((value, idx) => (
@@ -103,14 +98,14 @@ function JournalRecordScreen({ navigation }) {
                     style={[styles.thanksItemInput, styles.normal]}
                     placeholder="행복했던 일을 기록해보세요"
                     value={value}
-                    onChangeText={(text) => updateThanks(idx, text)}
+                    onChangeText={(text) => greenButtonThanks(idx, text)}
                   />
                 </View>
               ))}
             </View>
 
             <View style={styles.journalFeedbackSection}>
-              <Text style={[styles.normal, styles.writingJournalTitle]}>
+              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
                 일기에 대한 행복이의 답변이예요.
               </Text>
               <View style={styles.journalFeedbackSectionContainer}>
@@ -127,14 +122,35 @@ function JournalRecordScreen({ navigation }) {
             </View>
           </View>
         </ScrollView>
+        <CustomModal visible={true} onClose={() => {}}>
+          <Image
+            style={[styles.modalImage]}
+            source={require("../assets/mood/tired.png")}
+          />
+          <View style={styles.modalText}>
+            <Text style={styles.modalTitle}>정말 삭제하실거예요?</Text>
+            <Text style={styles.modalContent}>
+              삭제하시면 다시 복구할 수 없어요. 신중하게 선택해주세요!
+            </Text>
+          </View>
+          <View style={styles.modalButtons}>
+            <Pressable style={[styles.modalButton, styles.grayButton]}>
+              <Text style={[styles.buttonText, styles.point]}>취소</Text>
+            </Pressable>
+
+            <Pressable style={[styles.modalButton, styles.greenButton]}>
+              <Text style={[styles.buttonText, styles.point]}>삭제</Text>
+            </Pressable>
+          </View>
+        </CustomModal>
       </View>
 
       <View style={styles.buttons}>
-        <Pressable style={[styles.button, styles.delete]}>
+        <Pressable style={[styles.button, styles.grayButton]}>
           <Text style={[styles.buttonText, styles.point]}>삭제하기</Text>
         </Pressable>
 
-        <Pressable style={[styles.button, styles.update]}>
+        <Pressable style={[styles.button, styles.greenButton]}>
           <Text style={[styles.buttonText, styles.point]}>수정하기</Text>
         </Pressable>
       </View>
@@ -287,18 +303,50 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.PRIMARY_100,
     borderRadius: 30,
   },
 
-  delete: {
+  grayButton: {
     backgroundColor: colors.GRAY_300,
   },
 
-  update: {},
+  greenButton: {
+    backgroundColor: colors.PRIMARY_100,
+  },
 
-  writingJournalTitle: {
+  writingJournalmodalTitle: {
     marginBottom: 24,
+  },
+
+  modalTitle: {
+    fontFamily: "point",
+    fontSize: 20,
+    textAlign: "center",
+  },
+
+  modalContent: {
+    fontFamily: "normal",
+    fontSize: 20,
+    textAlign: "center",
+  },
+
+  modalButtons: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 20,
+  },
+
+  modalButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 100,
+    paddingVertical: 20,
+    borderRadius: 20,
+  },
+
+  modalImage: {
+    width: 100,
+    height: 100,
   },
 });
 
