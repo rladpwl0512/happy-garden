@@ -24,6 +24,7 @@
     "@babel/core": "^7.20.0",
     "@expo/webpack-config": "^18.0.3",
     "expo-blur": "^12.3.0",
+    "moment": "^2.29.4",
     "react-dom": "^18.2.0",
     "react-native-web": "^0.18.12"
   },
