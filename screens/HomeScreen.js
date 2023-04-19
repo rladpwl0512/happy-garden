@@ -56,7 +56,7 @@ function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.iconContainer}>
-          <Ionicons name="settings-sharp" size={30} color={colors.PRIMARY_50} />
+          <Ionicons name="settings-sharp" size={35} color={colors.PRIMARY_50} />
           <Text
             style={[
               styles.normal,
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
   },
 
   happyGardenIcon: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
   },
 
   iconContainer: {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
+import colors from "../styles/theme";
 
 const Calendar = ({ width = "100%" }) => {
   const [currentDate, setCurrentDate] = useState(moment());
@@ -13,7 +14,7 @@ const Calendar = ({ width = "100%" }) => {
         <TouchableOpacity onPress={prevMonth}>
           <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.monthYear}>{monthYear}</Text>
+        <Text style={styles.point}>{monthYear}</Text>
         <TouchableOpacity onPress={nextMonth}>
           <AntDesign name="right" size={24} color="black" />
         </TouchableOpacity>
@@ -26,7 +27,7 @@ const Calendar = ({ width = "100%" }) => {
     return (
       <View style={styles.daysOfWeek}>
         {daysOfWeek.map((day, index) => (
-          <Text key={index} style={styles.dayOfWeek}>
+          <Text key={index} style={[styles.dayOfWeek, styles.normal]}>
             {day}
           </Text>
         ))}
@@ -53,7 +54,9 @@ const Calendar = ({ width = "100%" }) => {
             <View key={index} style={styles.day}>
               {isCurrentMonth && (
                 <>
-                  <Text style={styles.date}>{date.date()}</Text>
+                  <Text style={(styles.date, styles.normal)}>
+                    {date.date()}
+                  </Text>
                   <View style={styles.circle} />
                 </>
               )}
@@ -82,6 +85,14 @@ const Calendar = ({ width = "100%" }) => {
 };
 
 const styles = StyleSheet.create({
+  point: {
+    fontFamily: "point",
+    fontSize: 20,
+  },
+  normal: {
+    fontFamily: "normal",
+    fontSize: 20,
+  },
   container: {
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -89,29 +100,20 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
-    padding: 10,
-    borderBottomColor: "#ddd",
+    padding: 20,
+    borderBottomColor: colors.GRAY_300,
     borderBottomWidth: 1,
-  },
-  monthYear: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
   },
   daysOfWeek: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 10,
-    borderBottomColor: "#ddd",
-    borderBottomWidth: 1,
+    // paddingHorizontal: 10,
     marginTop: 10,
   },
   dayOfWeek: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#999",
+    color: colors.GRAY_500,
     marginVertical: 10,
     flex: 1,
     textAlign: "center",
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   days: {
     flexDirection: "row",
     flexWrap: "wrap",
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     marginTop: 10,
   },
   day: {
@@ -128,15 +130,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   date: {
-    fontSize: 16,
-    color: "#333",
-    marginBottom: 5,
+    color: colors.BLACK,
   },
   circle: {
-    width: 16,
-    height: 16,
-    borderRadius: 4,
-    backgroundColor: "#F2F9EC",
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    backgroundColor: colors.PRIMARY_50,
   },
 });
 
