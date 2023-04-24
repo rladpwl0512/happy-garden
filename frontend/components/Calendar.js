@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   daysOfWeek: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // paddingHorizontal: 10,
+    paddingHorizontal: 10,
     marginTop: 10,
   },
   dayOfWeek: {
@@ -121,13 +121,12 @@ const styles = StyleSheet.create({
   days: {
     flexDirection: "row",
     flexWrap: "wrap",
-    // paddingHorizontal: 10,
-    marginTop: 10,
+    paddingHorizontal: 10,
   },
   day: {
     width: `${100 / 7}%`,
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 4,
   },
   date: {
     color: colors.BLACK,
