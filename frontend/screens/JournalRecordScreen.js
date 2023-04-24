@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -7,7 +8,6 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "../components/CustomModal";
@@ -37,8 +37,8 @@ function JournalRecordScreen({ navigation }) {
         <ScrollView>
           <View style={styles.journalsSection}>
             <View style={styles.moodJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
-                예지님이 이날 느낀 감정이예요.{" "}
+              <Text style={[styles.normal, styles.sectionTitle]}>
+                예지님이 이날 느낀 감정이예요.
               </Text>
               <View style={styles.moods}>
                 <View style={styles.moodRow}>
@@ -77,7 +77,7 @@ function JournalRecordScreen({ navigation }) {
             </View>
 
             <View style={styles.writingJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
+              <Text style={[styles.normal, styles.sectionTitle]}>
                 예지님의 하루 기록이예요.
               </Text>
               <TextInput
@@ -93,7 +93,7 @@ function JournalRecordScreen({ navigation }) {
 
             {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
             <View style={styles.thanksJournalSection}>
-              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
+              <Text style={[styles.normal, styles.sectionTitle]}>
                 예지님의 5번의 행복을 느낀 날이예요.
               </Text>
               {thanks.map((value, idx) => (
@@ -113,7 +113,7 @@ function JournalRecordScreen({ navigation }) {
             </View>
 
             <View style={styles.journalFeedbackSection}>
-              <Text style={[styles.normal, styles.writingJournalmodalTitle]}>
+              <Text style={[styles.normal, styles.sectionTitle]}>
                 일기에 대한 행복이의 답변이예요.
               </Text>
               <View style={styles.journalFeedbackSectionContainer}>
@@ -130,6 +130,7 @@ function JournalRecordScreen({ navigation }) {
             </View>
           </View>
         </ScrollView>
+
         <CustomModal visible={isModalVisible} onClose={closeDeleteModal}>
           <Image
             style={[styles.modalImage]}
@@ -185,9 +186,8 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    marginTop: 44,
-    backgroundColor: colors.WHITE
-
+    paddingTop: 44,
+    backgroundColor: colors.WHITE,
   },
 
   content: {
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.PRIMARY_100,
   },
 
-  writingJournalmodalTitle: {
+  sectionTitle: {
     marginBottom: 24,
   },
 
