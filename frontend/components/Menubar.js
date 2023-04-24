@@ -1,60 +1,88 @@
 import React, { useState } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/theme";
+import CustomModal from "./CustomModal";
 
 // TODO: 폴더 위치
 function Menubar() {
   const [activeMenu, setActiveMenu] = useState("calendar");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showNotReadyFeatureModal = () => {
+    setIsModalVisible(true);
+    console.log("true");
+  };
+  const closeNotReadyFeatureModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
-    <View style={styles.menubar}>
-      <View style={styles.iconContainer}>
+    <>
+      <View style={styles.menubar}>
+        <Pressable style={styles.iconContainer}>
+          <Image
+            style={styles.calendarIcon}
+            source={require("../assets/icon/calendar.png")}
+          />
+
+          <Text
+            style={[
+              styles.normal,
+              styles.iconText,
+              activeMenu === "calendar" && styles.activeMenu,
+            ]}
+          >
+            캘린더
+          </Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.iconContainer}
+          onPress={showNotReadyFeatureModal}
+        >
+          <Image
+            style={styles.happyGardenIcon}
+            source={require("../assets/icon/happy-garden.png")}
+          />
+          <Text
+            style={[
+              styles.normal,
+              styles.iconText,
+              activeMenu === "happyGarden" && styles.activeMenu,
+            ]}
+          >
+            행복정원
+          </Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.iconContainer}
+          onPress={showNotReadyFeatureModal}
+        >
+          <Ionicons name="settings-sharp" size={35} color={colors.PRIMARY_50} />
+          <Text
+            style={[
+              styles.normal,
+              styles.iconText,
+              activeMenu === "setting" && styles.activeMenu,
+            ]}
+          >
+            설정
+          </Text>
+        </Pressable>
+      </View>
+
+      <CustomModal visible={isModalVisible} onClose={closeNotReadyFeatureModal}>
         <Image
-          style={styles.calendarIcon}
-          source={require("../assets/icon/calendar.png")}
+          style={styles.notReadyIcon}
+          source={require("../assets/mood/sad.png")}
         />
-
-        <Text
-          style={[
-            styles.normal,
-            styles.iconText,
-            activeMenu === "calendar" && styles.activeMenu,
-          ]}
-        >
-          캘린더
+        <Text style={[styles.point, styles.notReadyModalText]}>
+          준비중입니다.
         </Text>
-      </View>
-
-      <View style={styles.iconContainer}>
-        <Image
-          style={styles.happyGardenIcon}
-          source={require("../assets/icon/happy-garden.png")}
-        />
-        <Text
-          style={[
-            styles.normal,
-            styles.iconText,
-            activeMenu === "happyGarden" && styles.activeMenu,
-          ]}
-        >
-          행복정원
-        </Text>
-      </View>
-
-      <View style={styles.iconContainer}>
-        <Ionicons name="settings-sharp" size={35} color={colors.PRIMARY_50} />
-        <Text
-          style={[
-            styles.normal,
-            styles.iconText,
-            activeMenu === "setting" && styles.activeMenu,
-          ]}
-        >
-          설정
-        </Text>
-      </View>
-    </View>
+      </CustomModal>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -96,6 +124,15 @@ const styles = StyleSheet.create({
 
   iconText: {
     color: colors.PRIMARY_50,
+  },
+
+  notReadyIcon: {
+    width: 100,
+    height: 100,
+  },
+
+  notReadyModalText: {
+    fontSize: 40,
   },
 });
 

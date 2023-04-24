@@ -18,9 +18,11 @@ function JournalRecordScreen({ navigation }) {
 
   const showDeleteModal = () => {
     setIsModalVisible(true);
+    console.log("보여준다");
   };
   const closeDeleteModal = () => {
     setIsModalVisible(false);
+    console.log("닫는다.");
   };
 
   return (
