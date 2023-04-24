@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   modal: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.PRIMARY_50,
     borderRadius: 8,
     padding: 20,
     alignItems: "center",
