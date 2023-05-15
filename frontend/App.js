@@ -24,18 +24,12 @@ export default function App() {
 
   return isReadyFont ? (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Splash"
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />
         <Stack.Screen name="ThanksJournal" component={ThanksJournalScreen} />
-        <Stack.Screen
-          name="JournalFeedback"
-          component={JournalFeedbackScreen}
-        />
+        <Stack.Screen name="JournalFeedback" component={JournalFeedbackScreen} />
         <Stack.Screen name="JournalRecord" component={JournalRecordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
