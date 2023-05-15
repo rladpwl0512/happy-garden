@@ -1,20 +1,20 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  TextInput,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable, TextInput, Image } from "react-native";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
+import { postCounselling } from "../apis/apis";
 
 function MoodJournalScreen({ navigation }) {
   const [selectedMood, setSelectedMood] = useState("");
+  const [journalText, setJournalText] = useState("");
 
   const handleSelectedMood = (mood) => {
     setSelectedMood(mood);
+  };
+
+  const handleCompleteMoodJournal = () => {
+    navigation.navigate("ThanksJournal");
+    postCounselling(journalText);
   };
 
   return (
@@ -30,94 +30,38 @@ function MoodJournalScreen({ navigation }) {
 
         <View style={styles.journalsSection}>
           <View style={styles.moodJournalSection}>
-            <Text style={[styles.grayText, styles.normal]}>
-              안녕하세요 예지님,
-            </Text>
+            <Text style={[styles.grayText, styles.normal]}>안녕하세요 예지님,</Text>
             <Text style={styles.normal}>오늘 하루 어땠어요?</Text>
 
             <View style={styles.moods}>
               <View style={styles.moodRow}>
-                <Pressable
-                  style={styles.moodButton}
-                  onPress={() => handleSelectedMood("happy")}
-                >
-                  <Image
-                    style={[
-                      styles.moodImage,
-                      selectedMood !== "happy" && styles.blur,
-                    ]}
-                    source={require("../assets/mood/happy.png")}
-                  />
+                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("happy")}>
+                  <Image style={[styles.moodImage, selectedMood !== "happy" && styles.blur]} source={require("../assets/mood/happy.png")} />
                 </Pressable>
-                <Pressable
-                  style={styles.moodButton}
-                  onPress={() => handleSelectedMood("normal")}
-                >
-                  <Image
-                    style={[
-                      styles.moodImage,
-                      selectedMood !== "normal" && styles.blur,
-                    ]}
-                    source={require("../assets/mood/normal.png")}
-                  />
+                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("normal")}>
+                  <Image style={[styles.moodImage, selectedMood !== "normal" && styles.blur]} source={require("../assets/mood/normal.png")} />
                 </Pressable>
-                <Pressable
-                  style={styles.moodButton}
-                  onPress={() => handleSelectedMood("angry")}
-                >
-                  <Image
-                    style={[
-                      styles.moodImage,
-                      selectedMood !== "angry" && styles.blur,
-                    ]}
-                    source={require("../assets/mood/angry.png")}
-                  />
+                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("angry")}>
+                  <Image style={[styles.moodImage, selectedMood !== "angry" && styles.blur]} source={require("../assets/mood/angry.png")} />
                 </Pressable>
-                <Pressable
-                  style={styles.moodButton}
-                  onPress={() => handleSelectedMood("sad")}
-                >
-                  <Image
-                    style={[
-                      styles.moodImage,
-                      selectedMood !== "sad" && styles.blur,
-                    ]}
-                    source={require("../assets/mood/sad.png")}
-                  />
+                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("sad")}>
+                  <Image style={[styles.moodImage, selectedMood !== "sad" && styles.blur]} source={require("../assets/mood/sad.png")} />
                 </Pressable>
-                <Pressable
-                  style={styles.moodButton}
-                  onPress={() => handleSelectedMood("tired")}
-                >
-                  <Image
-                    style={[
-                      styles.moodImage,
-                      selectedMood !== "tired" && styles.blur,
-                    ]}
-                    source={require("../assets/mood/tired.png")}
-                  />
+                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("tired")}>
+                  <Image style={[styles.moodImage, selectedMood !== "tired" && styles.blur]} source={require("../assets/mood/tired.png")} />
                 </Pressable>
               </View>
             </View>
           </View>
 
           <View style={styles.writingJournalSection}>
-            <Text style={[styles.normal, styles.writingJournalTitle]}>
-              예지님의 하루를 기록해보세요
-            </Text>
-            <TextInput
-              style={[styles.writingJournalInput, styles.normal]}
-              multiline
-              placeholder="오늘 하루 어떻게 지냈어요?"
-            ></TextInput>
+            <Text style={[styles.normal, styles.writingJournalTitle]}>예지님의 하루를 기록해보세요</Text>
+            <TextInput value={journalText} onChangeText={(text) => setJournalText(text)} style={[styles.writingJournalInput, styles.normal]} multiline placeholder="오늘 하루 어떻게 지냈어요?"></TextInput>
           </View>
         </View>
       </View>
 
-      <Pressable
-        style={styles.nextButton}
-        onPress={() => navigation.navigate("ThanksJournal")}
-      >
+      <Pressable style={styles.nextButton} onPress={handleCompleteMoodJournal}>
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
     </View>
