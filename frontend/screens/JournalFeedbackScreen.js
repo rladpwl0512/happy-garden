@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
+import { JournalContext } from "../contexts/JournalContext";
 
 function JournalFeedbackScreen({ navigation }) {
+  const { counsellingAnswer } = useContext(JournalContext);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -14,21 +18,10 @@ function JournalFeedbackScreen({ navigation }) {
         </View>
 
         <View style={styles.journalFeedbackSection}>
-          <Image
-            style={styles.happyImage}
-            source={require("../assets/mood/happy.png")}
-          />
-          <Text style={[styles.topText, styles.point]}>
-            오늘 하루도 수고하셨어요, 예지님 :)
-          </Text>
-          <Text style={[styles.bottomText, styles.normal]}>
-            자신감이 떨어지는 날이였군요. 스스로를 더 믿어보는건 어때요?
-            예지님은 충분히 멋진 사람이예요!
-          </Text>
-          <Pressable
-            style={styles.homeButton}
-            onPress={() => navigation.navigate("Home")}
-          >
+          <Image style={styles.happyImage} source={require("../assets/mood/happy.png")} />
+          <Text style={[styles.topText, styles.point]}>오늘 하루도 수고하셨어요, 예지님 :)</Text>
+          <Text style={[styles.bottomText, styles.normal]}>{counsellingAnswer}</Text>
+          <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
             <Text style={[styles.homeButtonText, styles.point]}>메인으로</Text>
           </Pressable>
         </View>

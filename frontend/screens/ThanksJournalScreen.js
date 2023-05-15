@@ -1,34 +1,11 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  TextInput,
-  ScrollView,
-  Image,
-} from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, Image } from "react-native";
+import React, { useState, useContext } from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
 import colors from "../styles/theme";
+import { JournalContext } from "../contexts/JournalContext";
 
 function ThanksJournalScreen({ navigation }) {
-  const [thanks, setThanks] = useState([""]);
-
-  const addThanksItem = () => {
-    setThanks([...thanks, ""]);
-  };
-
-  const updateThanks = (idx, text) => {
-    const newThanks = [...thanks];
-    newThanks[idx] = text;
-    setThanks(newThanks);
-  };
-
-  const deleteThanksItem = (idx) => {
-    const newThanks = [...thanks];
-    newThanks.splice(idx, 1);
-    setThanks(newThanks);
-  };
+  const { thanks, addThanksItem, updateThanks, deleteThanksItem } = useContext(JournalContext);
 
   return (
     <View style={styles.container}>
@@ -42,18 +19,12 @@ function ThanksJournalScreen({ navigation }) {
 
         <View style={styles.journalSection}>
           <View style={styles.journalTitle}>
-            <Text style={styles.normal}>
-              오늘 하루 있었던 감사했던 일을 기록해보세요.
-            </Text>
-            <Text style={[styles.grayText, styles.normal]}>
-              감사했던 일, 행복했던 일 ... 모두 좋아요 :)
-            </Text>
+            <Text style={styles.normal}>오늘 하루 있었던 감사했던 일을 기록해보세요.</Text>
+            <Text style={[styles.grayText, styles.normal]}>감사했던 일, 행복했던 일 ... 모두 좋아요 :)</Text>
           </View>
 
           <Pressable onPress={addThanksItem}>
-            <Text style={[styles.normal, styles.addButtonText]}>
-              + 행복 추가
-            </Text>
+            <Text style={[styles.normal, styles.addButtonText]}>+ 행복 추가</Text>
           </Pressable>
 
           <ScrollView
@@ -61,30 +32,15 @@ function ThanksJournalScreen({ navigation }) {
             ref={(ref) => {
               this.scrollView = ref;
             }}
-            onContentSizeChange={() =>
-              this.scrollView.scrollToEnd({ animated: true })
-            }
+            onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}
           >
             {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
             {thanks.map((value, idx) => (
               <View style={styles.thanksItemContainer} key={idx}>
-                <Image
-                  style={styles.happyImage}
-                  source={require("../assets/mood/happy.png")}
-                />
-                <TextInput
-                  style={[styles.thanksItemInput, styles.normal]}
-                  placeholder="행복했던 일을 기록해보세요"
-                  value={value}
-                  onChangeText={(text) => updateThanks(idx, text)}
-                />
+                <Image style={styles.happyImage} source={require("../assets/mood/happy.png")} />
+                <TextInput style={[styles.thanksItemInput, styles.normal]} placeholder="행복했던 일을 기록해보세요" value={value} onChangeText={(text) => updateThanks(idx, text)} />
                 <Pressable onPress={() => deleteThanksItem(idx)}>
-                  <Entypo
-                    name="minus"
-                    size={20}
-                    color={colors.GRAY_500}
-                    style={styles.minusIcon}
-                  />
+                  <Entypo name="minus" size={20} color={colors.GRAY_500} style={styles.minusIcon} />
                 </Pressable>
               </View>
             ))}
@@ -92,10 +48,7 @@ function ThanksJournalScreen({ navigation }) {
         </View>
       </View>
 
-      <Pressable
-        style={styles.nextButton}
-        onPress={() => navigation.navigate("JournalFeedback")}
-      >
+      <Pressable style={styles.nextButton} onPress={() => navigation.navigate("JournalFeedback")}>
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
     </View>

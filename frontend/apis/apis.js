@@ -18,7 +18,7 @@ async function postCounselling(text) {
       body: JSON.stringify({ journal }),
     });
     const data = await response.json();
-    console.log(data.assistant);
+    return data.assistant;
   } catch (error) {
     console.error(error);
   }

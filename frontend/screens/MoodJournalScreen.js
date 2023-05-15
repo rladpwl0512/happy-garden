@@ -1,20 +1,18 @@
+import { useContext } from "react";
 import { View, Text, StyleSheet, Pressable, TextInput, Image } from "react-native";
-import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import { postCounselling } from "../apis/apis";
+import { JournalContext } from "../contexts/JournalContext";
 
 function MoodJournalScreen({ navigation }) {
-  const [selectedMood, setSelectedMood] = useState("");
-  const [journalText, setJournalText] = useState("");
+  const { selectedMood, journalText, updateSelectedMood, updateJournalText, updateCounsellingAnswer } = useContext(JournalContext);
 
-  const handleSelectedMood = (mood) => {
-    setSelectedMood(mood);
-  };
-
-  const handleCompleteMoodJournal = () => {
+  const handleCompleteMoodJournal = async () => {
     navigation.navigate("ThanksJournal");
-    postCounselling(journalText);
+    const counsellingAnswer = await postCounselling(journalText);
+    await updateCounsellingAnswer(counsellingAnswer);
+    console.log(counsellingAnswer);
   };
 
   return (
@@ -35,19 +33,19 @@ function MoodJournalScreen({ navigation }) {
 
             <View style={styles.moods}>
               <View style={styles.moodRow}>
-                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("happy")}>
+                <Pressable style={styles.moodButton} onPress={() => updateSelectedMood("happy")}>
                   <Image style={[styles.moodImage, selectedMood !== "happy" && styles.blur]} source={require("../assets/mood/happy.png")} />
                 </Pressable>
-                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("normal")}>
+                <Pressable style={styles.moodButton} onPress={() => updateSelectedMood("normal")}>
                   <Image style={[styles.moodImage, selectedMood !== "normal" && styles.blur]} source={require("../assets/mood/normal.png")} />
                 </Pressable>
-                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("angry")}>
+                <Pressable style={styles.moodButton} onPress={() => updateSelectedMood("angry")}>
                   <Image style={[styles.moodImage, selectedMood !== "angry" && styles.blur]} source={require("../assets/mood/angry.png")} />
                 </Pressable>
-                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("sad")}>
+                <Pressable style={styles.moodButton} onPress={() => updateSelectedMood("sad")}>
                   <Image style={[styles.moodImage, selectedMood !== "sad" && styles.blur]} source={require("../assets/mood/sad.png")} />
                 </Pressable>
-                <Pressable style={styles.moodButton} onPress={() => handleSelectedMood("tired")}>
+                <Pressable style={styles.moodButton} onPress={() => updateSelectedMood("tired")}>
                   <Image style={[styles.moodImage, selectedMood !== "tired" && styles.blur]} source={require("../assets/mood/tired.png")} />
                 </Pressable>
               </View>
@@ -56,7 +54,7 @@ function MoodJournalScreen({ navigation }) {
 
           <View style={styles.writingJournalSection}>
             <Text style={[styles.normal, styles.writingJournalTitle]}>예지님의 하루를 기록해보세요</Text>
-            <TextInput value={journalText} onChangeText={(text) => setJournalText(text)} style={[styles.writingJournalInput, styles.normal]} multiline placeholder="오늘 하루 어떻게 지냈어요?"></TextInput>
+            <TextInput value={journalText} onChangeText={(text) => updateJournalText(text)} style={[styles.writingJournalInput, styles.normal]} multiline placeholder="오늘 하루 어떻게 지냈어요?"></TextInput>
           </View>
         </View>
       </View>
