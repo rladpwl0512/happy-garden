@@ -1,12 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { View, Text, StyleSheet, Pressable, TextInput, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import { postCounselling } from "../apis/apis";
 import { JournalContext } from "../contexts/JournalContext";
+import moment from "moment";
 
 function MoodJournalScreen({ navigation }) {
   const { selectedMood, journalText, updateSelectedMood, updateJournalText, updateCounsellingAnswer } = useContext(JournalContext);
+  // TODO: 헤더 페이지마다 중복되는 것 따로 빼기
+  const currentDate = moment();
+  moment.lang("ko", {
+    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
+  });
 
   const handleCompleteMoodJournal = async () => {
     navigation.navigate("ThanksJournal");
@@ -23,7 +29,7 @@ function MoodJournalScreen({ navigation }) {
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
+          <Text style={[styles.point, styles.date]}>{currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <View style={styles.journalsSection}>

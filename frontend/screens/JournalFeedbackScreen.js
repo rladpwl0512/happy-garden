@@ -3,25 +3,41 @@ import { StyleSheet, View, Text, Pressable, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import { JournalContext } from "../contexts/JournalContext";
+import moment from "moment";
+import { postJournal } from "../apis/apis";
 
 function JournalFeedbackScreen({ navigation }) {
-  const { counsellingAnswer } = useContext(JournalContext);
+  const { counsellingAnswer, resetJournalContext, journalState } = useContext(JournalContext);
+  const currentDate = moment();
+  const date = currentDate.format("YYYY-MM-DD"); //TODO: 따로 빼기 (context해서 어디서든 사용가능하게)
+  moment.lang("ko", {
+    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
+  });
+
+  const handleCompletedTodayJournal = () => {
+    navigation.navigate("Home");
+    // 데이터베이스에 일기 내용 저장
+    postJournal({ ...journalState(), date });
+
+    // state 리셋
+    resetJournalContext();
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Pressable onPress={() => navigation.navigate("Home")}>
+          <Pressable onPress={() => navigation.navigate("ThanksJournal")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
+          <Text style={[styles.point, styles.date]}>{currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <View style={styles.journalFeedbackSection}>
           <Image style={styles.happyImage} source={require("../assets/mood/happy.png")} />
           <Text style={[styles.topText, styles.point]}>오늘 하루도 수고하셨어요, 예지님 :)</Text>
           <Text style={[styles.bottomText, styles.normal]}>{counsellingAnswer}</Text>
-          <Pressable style={styles.homeButton} onPress={() => navigation.navigate("Home")}>
+          <Pressable style={styles.homeButton} onPress={handleCompletedTodayJournal}>
             <Text style={[styles.homeButtonText, styles.point]}>메인으로</Text>
           </Pressable>
         </View>

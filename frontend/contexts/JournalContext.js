@@ -3,9 +3,9 @@ import React, { createContext, useState } from "react";
 export const JournalContext = createContext();
 
 export const JournalProvider = ({ children }) => {
-  const [thanks, setThanks] = useState([""]);
   const [selectedMood, setSelectedMood] = useState("");
   const [journalText, setJournalText] = useState("");
+  const [thanks, setThanks] = useState([""]);
   const [counsellingAnswer, setCounsellingAnswer] = useState("");
 
   const addThanksItem = () => {
@@ -36,6 +36,22 @@ export const JournalProvider = ({ children }) => {
     setCounsellingAnswer(text);
   };
 
+  const resetJournalContext = () => {
+    setThanks([""]);
+    setSelectedMood("");
+    setJournalText("");
+    setCounsellingAnswer("");
+  };
+
+  const journalState = () => {
+    return {
+      selectedMood,
+      journalText,
+      thanks,
+      counsellingAnswer,
+    };
+  };
+
   return (
     <JournalContext.Provider
       value={{
@@ -49,6 +65,8 @@ export const JournalProvider = ({ children }) => {
         updateJournalText,
         counsellingAnswer,
         updateCounsellingAnswer,
+        resetJournalContext,
+        journalState,
       }}
     >
       {children}

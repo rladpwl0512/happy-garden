@@ -4,26 +4,17 @@ import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/theme";
 
-const CustomModal = ({
-  visible,
-  onClose,
-  width = 300,
-  height = 300,
-  children,
-}) => {
+const CustomModal = ({ visible, onClose, width = 300, height = 300, children }) => {
   const [blurAmount, setBlurAmount] = useState(10);
 
   return (
     <Modal visible={visible} transparent>
-      <BlurView intensity={blurAmount} style={styles.absolute}>
-        <TouchableOpacity style={styles.absolute} onPress={() => onClose()} />
+      <BlurView intensity={blurAmount} style={styles.absolute} onPress={() => onClose()}>
+        <TouchableOpacity style={styles.absolute} />
       </BlurView>
       <View style={styles.container}>
         <View style={[styles.modal]}>
-          <TouchableOpacity
-            onPress={() => onClose()}
-            style={styles.closeButton}
-          >
+          <TouchableOpacity onPress={() => onClose()} style={styles.closeButton}>
             <Ionicons name="close-outline" size={28} color={colors.GRAY_500} />
           </TouchableOpacity>
           {children}

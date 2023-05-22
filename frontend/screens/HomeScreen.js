@@ -1,25 +1,53 @@
 import { useState } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, Image, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import Calendar from "../components/Calendar";
 import Menubar from "../components/Menubar";
+import { getJournal } from "../apis/apis";
+import moment from "moment";
+import CustomModal from "../components/CustomModal";
 
 function HomeScreen({ navigation }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleWriteJournalButton = async () => {
+    const date = moment().format("YYYY-MM-DD");
+    const todayJournal = await getJournal(date);
+
+    if (!todayJournal.error) {
+      console.log(todayJournal);
+      showModal(true);
+      return;
+    }
+
+    navigation.navigate("MoodJournal");
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Calendar />
-        <Pressable
-          style={styles.writeJournalButton}
-          onPress={() => navigation.navigate("MoodJournal")}
-        >
+        <Pressable style={styles.writeJournalButton} onPress={handleWriteJournalButton}>
           <FontAwesome5 name="pen" size={25} color={colors.WHITE} />
         </Pressable>
       </View>
 
       {/* TODO: 컴포넌트 분리, 행복정원, 설정에서도 가져갈 수 있도록 */}
       <Menubar />
+
+      <CustomModal visible={isModalVisible} onClose={closeModal}>
+        <Image style={styles.notReadyIcon} source={require("../assets/mood/happy.png")} />
+        <Text style={[styles.point, styles.notReadyModalText]}>오늘 일기를 이미 작성하셨습니다.</Text>
+      </CustomModal>
     </View>
   );
 }
@@ -62,6 +90,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.21,
     shadowRadius: 7.68,
     elevation: 10,
+  },
+
+  notReadyIcon: {
+    width: 100,
+    height: 100,
+  },
+
+  notReadyModalText: {
+    fontSize: 20,
   },
 });
 

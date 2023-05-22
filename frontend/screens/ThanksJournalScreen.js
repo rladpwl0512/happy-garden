@@ -1,11 +1,16 @@
 import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, Image } from "react-native";
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
 import colors from "../styles/theme";
 import { JournalContext } from "../contexts/JournalContext";
+import moment from "moment";
 
 function ThanksJournalScreen({ navigation }) {
   const { thanks, addThanksItem, updateThanks, deleteThanksItem } = useContext(JournalContext);
+  const currentDate = moment();
+  moment.lang("ko", {
+    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
+  });
 
   return (
     <View style={styles.container}>
@@ -14,7 +19,7 @@ function ThanksJournalScreen({ navigation }) {
           <Pressable onPress={() => navigation.navigate("MoodJournal")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
+          <Text style={[styles.point, styles.date]}>{currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <View style={styles.journalSection}>

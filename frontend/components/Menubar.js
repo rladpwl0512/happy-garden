@@ -11,7 +11,6 @@ function Menubar() {
 
   const showNotReadyFeatureModal = () => {
     setIsModalVisible(true);
-    console.log("true");
   };
   const closeNotReadyFeatureModal = () => {
     setIsModalVisible(false);
@@ -21,66 +20,25 @@ function Menubar() {
     <>
       <View style={styles.menubar}>
         <Pressable style={styles.iconContainer}>
-          <Image
-            style={styles.calendarIcon}
-            source={require("../assets/icon/calendar.png")}
-          />
+          <Image style={styles.calendarIcon} source={require("../assets/icon/calendar.png")} />
 
-          <Text
-            style={[
-              styles.normal,
-              styles.iconText,
-              activeMenu === "calendar" && styles.activeMenu,
-            ]}
-          >
-            캘린더
-          </Text>
+          <Text style={[styles.normal, styles.iconText, activeMenu === "calendar" && styles.activeMenu]}>캘린더</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.iconContainer}
-          onPress={showNotReadyFeatureModal}
-        >
-          <Image
-            style={styles.happyGardenIcon}
-            source={require("../assets/icon/happy-garden.png")}
-          />
-          <Text
-            style={[
-              styles.normal,
-              styles.iconText,
-              activeMenu === "happyGarden" && styles.activeMenu,
-            ]}
-          >
-            행복정원
-          </Text>
+        <Pressable style={styles.iconContainer} onPress={showNotReadyFeatureModal}>
+          <Image style={styles.happyGardenIcon} source={require("../assets/icon/happy-garden.png")} />
+          <Text style={[styles.normal, styles.iconText, activeMenu === "happyGarden" && styles.activeMenu]}>행복정원</Text>
         </Pressable>
 
-        <Pressable
-          style={styles.iconContainer}
-          onPress={showNotReadyFeatureModal}
-        >
+        <Pressable style={styles.iconContainer} onPress={showNotReadyFeatureModal}>
           <Ionicons name="settings-sharp" size={35} color={colors.PRIMARY_50} />
-          <Text
-            style={[
-              styles.normal,
-              styles.iconText,
-              activeMenu === "setting" && styles.activeMenu,
-            ]}
-          >
-            설정
-          </Text>
+          <Text style={[styles.normal, styles.iconText, activeMenu === "setting" && styles.activeMenu]}>설정</Text>
         </Pressable>
       </View>
 
       <CustomModal visible={isModalVisible} onClose={closeNotReadyFeatureModal}>
-        <Image
-          style={styles.notReadyIcon}
-          source={require("../assets/mood/sad.png")}
-        />
-        <Text style={[styles.point, styles.notReadyModalText]}>
-          준비중입니다.
-        </Text>
+        <Image style={styles.notReadyIcon} source={require("../assets/mood/sad.png")} />
+        <Text style={[styles.point, styles.notReadyModalText]}>준비중입니다.</Text>
       </CustomModal>
     </>
   );

@@ -54,9 +54,7 @@ const Calendar = ({ width = "100%" }) => {
             <View key={index} style={styles.day}>
               {isCurrentMonth && (
                 <>
-                  <Text style={(styles.date, styles.normal)}>
-                    {date.date()}
-                  </Text>
+                  <Text style={(styles.date, styles.normal)}>{date.date()}</Text>
                   <View style={styles.circle} />
                 </>
               )}
