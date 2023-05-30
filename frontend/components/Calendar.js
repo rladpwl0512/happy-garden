@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import colors from "../styles/theme";
-import { getJournalMood } from "../apis/apis";
+import { getJournal, getJournalMood } from "../apis/apis";
 
-const Calendar = ({ width = "100%" }) => {
+function Calendar({ onPressDate, width = "100%" }) {
   const [currentDate, setCurrentDate] = useState(moment());
   const [currentMonthMoods, setCurrentMonthMoods] = useState([]);
-  console.log(currentMonthMoods);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +19,12 @@ const Calendar = ({ width = "100%" }) => {
 
     fetchData();
   }, [currentDate]);
+
+  const getClickedJournal = async (date) => {
+    const journal = await getJournal(date);
+    console.log(journal);
+    onPressDate(journal);
+  };
 
   const renderHeader = () => {
     const monthYear = currentDate.format("YYYY년 M월");
@@ -68,7 +73,7 @@ const Calendar = ({ width = "100%" }) => {
           const currentDateJournal = currentMonthMoods.find((obj) => obj.date === targetDate);
           const isCurrentMonth = date.isSame(currentDate, "month");
           return (
-            <View key={index} style={styles.day}>
+            <Pressable key={index} style={styles.day} onPress={() => getClickedJournal(targetDate)}>
               {isCurrentMonth && (
                 <>
                   <Text style={(styles.date, styles.normal)}>{date.date()}</Text>
@@ -85,7 +90,7 @@ const Calendar = ({ width = "100%" }) => {
                   )}
                 </>
               )}
-            </View>
+            </Pressable>
           );
         })}
       </View>
@@ -107,7 +112,7 @@ const Calendar = ({ width = "100%" }) => {
       {renderDays()}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   point: {

@@ -4,7 +4,8 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "../components/CustomModal";
 
-function JournalRecordScreen({ navigation }) {
+function JournalRecordScreen({ navigation, route }) {
+  console.log(route.params);
   const [thanks, setThanks] = useState(["a", "b", "c", "d", "e"]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 

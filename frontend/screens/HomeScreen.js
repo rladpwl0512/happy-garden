@@ -32,10 +32,14 @@ function HomeScreen({ navigation }) {
     setIsModalVisible(false);
   };
 
+  const navigateJournalRecordScreen = (clickedJournalData) => {
+    navigation.navigate("JournalRecord", clickedJournalData);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Calendar />
+        <Calendar onPressDate={navigateJournalRecordScreen} />
         <Pressable style={styles.writeJournalButton} onPress={handleWriteJournalButton}>
           <FontAwesome5 name="pen" size={25} color={colors.WHITE} />
         </Pressable>
