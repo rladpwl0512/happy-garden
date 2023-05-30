@@ -4,7 +4,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import Calendar from "../components/Calendar";
 import Menubar from "../components/Menubar";
-import { getJournal, getJournalMood } from "../apis/apis";
+import { getJournal } from "../apis/apis";
 import moment from "moment";
 import CustomModal from "../components/CustomModal";
 
@@ -31,12 +31,6 @@ function HomeScreen({ navigation }) {
   const closeModal = () => {
     setIsModalVisible(false);
   };
-
-  const test = async () => {
-    await getJournalMood(4);
-  };
-
-  test();
 
   return (
     <View style={styles.container}>

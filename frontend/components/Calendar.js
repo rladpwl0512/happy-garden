@@ -1,11 +1,25 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import moment from "moment";
 import colors from "../styles/theme";
+import { getJournalMood } from "../apis/apis";
 
 const Calendar = ({ width = "100%" }) => {
   const [currentDate, setCurrentDate] = useState(moment());
+  const [currentMonthMoods, setCurrentMonthMoods] = useState([]);
+  console.log(currentMonthMoods);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const month = currentDate.month() + 1; // 현재 화면의 month
+
+      const moods = await getJournalMood(month);
+      setCurrentMonthMoods(moods);
+    };
+
+    fetchData();
+  }, [currentDate]);
 
   const renderHeader = () => {
     const monthYear = currentDate.format("YYYY년 M월");
@@ -34,6 +48,7 @@ const Calendar = ({ width = "100%" }) => {
       </View>
     );
   };
+
   const renderDays = () => {
     const monthStart = currentDate.clone().startOf("month");
     const monthEnd = currentDate.clone().endOf("month");
@@ -49,13 +64,25 @@ const Calendar = ({ width = "100%" }) => {
     return (
       <View style={styles.days}>
         {days.map((date, index) => {
+          const targetDate = date.format("YYYY-MM-DD");
+          const currentDateJournal = currentMonthMoods.find((obj) => obj.date === targetDate);
           const isCurrentMonth = date.isSame(currentDate, "month");
           return (
             <View key={index} style={styles.day}>
               {isCurrentMonth && (
                 <>
                   <Text style={(styles.date, styles.normal)}>{date.date()}</Text>
-                  <View style={styles.circle} />
+                  {currentDateJournal ? (
+                    <>
+                      {currentDateJournal.selectedMood === "angry" && <Image style={styles.moodImage} source={require("../assets/mood/angry.png")} />}
+                      {currentDateJournal.selectedMood === "happy" && <Image style={styles.moodImage} source={require("../assets/mood/happy.png")} />}
+                      {currentDateJournal.selectedMood === "normal" && <Image style={styles.moodImage} source={require("../assets/mood/normal.png")} />}
+                      {currentDateJournal.selectedMood === "sad" && <Image style={styles.moodImage} source={require("../assets/mood/sad.png")} />}
+                      {currentDateJournal.selectedMood === "tired" && <Image style={styles.moodImage} source={require("../assets/mood/tired.png")} />}
+                    </>
+                  ) : (
+                    <View style={styles.circle} />
+                  )}
                 </>
               )}
             </View>
@@ -134,6 +161,10 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 50,
     backgroundColor: colors.PRIMARY_50,
+  },
+  moodImage: {
+    width: 35,
+    height: 35,
   },
 });
 
