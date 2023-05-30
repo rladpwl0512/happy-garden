@@ -9,6 +9,7 @@ const CustomModal = ({ visible, onClose, width = 300, height = 300, children }) 
 
   return (
     <Modal visible={visible} transparent>
+      {/* TODO: close 안됨(시뮬레이터에서만 그럴수도?)  */}
       <BlurView intensity={blurAmount} style={styles.absolute} onPress={() => onClose()}>
         <TouchableOpacity style={styles.absolute} />
       </BlurView>

@@ -94,6 +94,7 @@ app.post("/counselling", async function (req, res) {
   res.json({ assistant: counselling }); //"POST request to the homepage" // json형식으로 내주기
 });
 
+// 일기 생성
 app.post("/journal", async function (req, res) {
   const { content } = req.body;
   const values = [JSON.stringify(content)];
@@ -106,6 +107,7 @@ app.post("/journal", async function (req, res) {
   });
 });
 
+// 일기 단건 조회
 app.get("/journal/:date", async function (req, res) {
   const requestedDate = req.params.date;
 
@@ -125,6 +127,24 @@ app.get("/journal/:date", async function (req, res) {
   });
 });
 
+// 일기 감정 목록 조회
+app.get("/journal/mood/:month", (req, res) => {
+  const month = req.params.month;
+  const query = `SELECT id, test FROM journal WHERE MONTH(test->"$.date") = ?`;
+
+  connection.query(query, [month], (error, results) => {
+    if (error) throw error;
+
+    const journals = results.map((row) => {
+      const { id, test } = row;
+      const { date, selectedMood } = JSON.parse(test);
+      return { id, date, selectedMood };
+    });
+
+    res.json(journals);
+  });
+});
+
 const mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "127.0.0.1", //localhost
@@ -135,10 +155,3 @@ const connection = mysql.createConnection({
 });
 
 connection.connect();
-
-// connection.query("select * from journal", (error, results) => {
-//   if (error) throw error;
-//   console.log(results);
-// });
-
-// connection.end();
