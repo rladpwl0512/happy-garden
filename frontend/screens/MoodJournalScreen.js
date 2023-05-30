@@ -18,7 +18,6 @@ function MoodJournalScreen({ navigation }) {
     navigation.navigate("ThanksJournal");
     const counsellingAnswer = await postCounselling(journalText);
     await updateCounsellingAnswer(counsellingAnswer);
-    console.log(counsellingAnswer);
   };
 
   return (

@@ -33,7 +33,8 @@ function HomeScreen({ navigation }) {
   };
 
   const navigateJournalRecordScreen = (clickedJournalData) => {
-    navigation.navigate("JournalRecord", clickedJournalData);
+    // TODO: 백단에서 모두 JSON.parse 된 결과값을 리턴하도록 수정?
+    navigation.navigate("JournalRecord", JSON.parse(clickedJournalData));
   };
 
   return (

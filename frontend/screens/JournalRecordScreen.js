@@ -3,11 +3,15 @@ import { View, Text, StyleSheet, Pressable, ScrollView, TextInput, Image } from 
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "../components/CustomModal";
+import moment from "moment";
 
 function JournalRecordScreen({ navigation, route }) {
-  console.log(route.params);
-  const [thanks, setThanks] = useState(["a", "b", "c", "d", "e"]);
+  const { counsellingAnswer, date, journalText, thanks, selectedMood } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  moment.lang("ko", {
+    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
+  });
 
   const showDeleteModal = () => {
     setIsModalVisible(true);
@@ -24,7 +28,7 @@ function JournalRecordScreen({ navigation, route }) {
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>2023년 3월 15일 (수)</Text>
+          <Text style={[styles.point, styles.date]}>{moment(date).format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <ScrollView>
@@ -34,19 +38,19 @@ function JournalRecordScreen({ navigation, route }) {
               <View style={styles.moods}>
                 <View style={styles.moodRow}>
                   <View style={styles.moodButton}>
-                    <Image style={[styles.moodImage]} source={require("../assets/mood/happy.png")} />
+                    <Image style={[styles.moodImage, selectedMood !== "happy" && styles.blur]} source={require("../assets/mood/happy.png")} />
                   </View>
                   <View style={styles.moodButton}>
-                    <Image style={[styles.moodImage]} source={require("../assets/mood/normal.png")} />
+                    <Image style={[styles.moodImage, selectedMood !== "normal" && styles.blur]} source={require("../assets/mood/normal.png")} />
                   </View>
                   <View style={styles.moodButton}>
-                    <Image style={[styles.moodImage]} source={require("../assets/mood/angry.png")} />
+                    <Image style={[styles.moodImage, selectedMood !== "angry" && styles.blur]} source={require("../assets/mood/angry.png")} />
                   </View>
                   <View style={styles.moodButton}>
-                    <Image style={[styles.moodImage]} source={require("../assets/mood/sad.png")} />
+                    <Image style={[styles.moodImage, selectedMood !== "sad" && styles.blur]} source={require("../assets/mood/sad.png")} />
                   </View>
                   <View style={styles.moodButton}>
-                    <Image style={[styles.moodImage]} source={require("../assets/mood/tired.png")} />
+                    <Image style={[styles.moodImage, selectedMood !== "tired" && styles.blur]} source={require("../assets/mood/tired.png")} />
                   </View>
                 </View>
               </View>
@@ -55,13 +59,13 @@ function JournalRecordScreen({ navigation, route }) {
             <View style={styles.writingJournalSection}>
               <Text style={[styles.normal, styles.sectionTitle]}>예지님의 하루 기록이예요.</Text>
               <TextInput editable={false} style={[styles.writingJournalInput, styles.normal]} multiline placeholder="오늘 하루 어떻게 지냈어요?">
-                오늘은 자신감이 떨어지는 하루였다. 그런데 맛있는걸 먹어서 기분이 좋다! 히히 친구가 맛있는 치킨을 사줬다. 역시 내 친구가 짱이다.
+                {journalText}
               </TextInput>
             </View>
 
             {/* TODO: key를 idx로 사용하는 것이 괜찮은가 */}
             <View style={styles.thanksJournalSection}>
-              <Text style={[styles.normal, styles.sectionTitle]}>예지님의 5번의 행복을 느낀 날이예요.</Text>
+              <Text style={[styles.normal, styles.sectionTitle]}>예지님 {thanks.length}번의 행복을 느낀 날이예요.</Text>
               {thanks.map((value, idx) => (
                 <View style={styles.thanksItemContainer} key={idx}>
                   <Image style={styles.happyImage} source={require("../assets/mood/happy.png")} />
@@ -75,7 +79,7 @@ function JournalRecordScreen({ navigation, route }) {
               <View style={styles.journalFeedbackSectionContainer}>
                 <Image source={require("../assets/mood/happy.png")} style={styles.happyImage} />
                 <View style={styles.journalFeedbackContainer}>
-                  <Text style={(styles.journalFeedbackText, styles.normal)}>test</Text>
+                  <Text style={(styles.journalFeedbackText, styles.normal)}>{counsellingAnswer}</Text>
                 </View>
               </View>
             </View>

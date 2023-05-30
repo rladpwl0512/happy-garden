@@ -22,7 +22,6 @@ function Calendar({ onPressDate, width = "100%" }) {
 
   const getClickedJournal = async (date) => {
     const journal = await getJournal(date);
-    console.log(journal);
     onPressDate(journal);
   };
 
