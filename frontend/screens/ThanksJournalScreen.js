@@ -59,7 +59,7 @@ function ThanksJournalScreen({ navigation, route }) {
         </View>
       </View>
 
-      <Pressable style={styles.nextButton} onPress={() => navigation.navigate("JournalFeedback", { todoUpdateDate: route.params.todoUpdateDate })}>
+      <Pressable style={styles.nextButton} onPress={() => (route.params ? navigation.navigate("JournalFeedback", { todoUpdateDate: route.params.todoUpdateDate }) : navigation.navigate("JournalFeedback"))}>
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
     </View>

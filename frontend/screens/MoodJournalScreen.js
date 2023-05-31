@@ -17,7 +17,7 @@ function MoodJournalScreen({ navigation, route }) {
   });
 
   const handleCompleteMoodJournal = async () => {
-    navigation.navigate("ThanksJournal", { todoUpdateDate: route.params.todoUpdateDate, todoUpdateThanks: route.params.todoUpdateThanks });
+    route.params ? navigation.navigate("ThanksJournal", { todoUpdateDate: route.params.todoUpdateDate, todoUpdateThanks: route.params.todoUpdateThanks }) : navigation.navigate("ThanksJournal");
     const counsellingAnswer = await postCounselling(journalText);
     await updateCounsellingAnswer(counsellingAnswer);
   };

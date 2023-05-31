@@ -55,7 +55,7 @@ const CounsellingScreen = ({ navigation }) => {
       if (userMessages[i]) {
         renderedMessages.push(
           <View key={`user_${i}`} style={[styles.chatMessage, styles.userMessage]}>
-            <Text>{userMessages[i]}</Text>
+            <Text style={[styles.point, styles.chat]}>{userMessages[i]}</Text>
           </View>
         );
       }
@@ -63,7 +63,7 @@ const CounsellingScreen = ({ navigation }) => {
       if (assistantMessages[i]) {
         renderedMessages.push(
           <View key={`assistant_${i}`} style={[styles.chatMessage, styles.botMessage]}>
-            <Text>{assistantMessages[i]}</Text>
+            <Text style={[styles.point, styles.chat]}>{assistantMessages[i]}</Text>
           </View>
         );
       }
@@ -82,16 +82,16 @@ const CounsellingScreen = ({ navigation }) => {
       <View style={styles.chatWindow}>
         <ScrollView contentContainerStyle={styles.chatBox} ref={scrollViewRef} onContentSizeChange={scrollToBottom}>
           <View style={[styles.chatMessage, styles.botMessage]}>
-            <Text>안녕하세요, 저는 행복이예요. 고민이 있으면 들어줄게요.</Text>
+            <Text style={[styles.point, styles.chat]}>안녕하세요, 저는 행복이예요. 고민이 있으면 들어줄게요.</Text>
           </View>
           {renderMessages()}
         </ScrollView>
         {isLoading && <EvilIcons name="spinner-2" size={40} color="black" />}
       </View>
       <View style={styles.chatInput}>
-        <TextInput style={styles.userInput} placeholder="무엇이든 말해보세요" value={inputText} onChangeText={(text) => setInputText(text)} />
+        <TextInput style={[styles.userInput, styles.point]} placeholder="무엇이든 말해보세요" value={inputText} onChangeText={(text) => setInputText(text)} />
         <Pressable style={styles.inputButton} onPress={getCounselling}>
-          <Text>확인</Text>
+          <Text style={styles.point}>확인</Text>
         </Pressable>
       </View>
     </View>
@@ -110,6 +110,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 80,
+  },
+  point: {
+    fontFamily: "point",
+    fontSize: 20,
   },
   logo: {
     width: 100,
@@ -163,14 +167,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   inputButton: {
-    padding: 20,
+    padding: 16,
     borderRadius: 50,
     backgroundColor: "#f2f9ec",
     color: "#222222",
   },
-  kakaoAdd: {
-    justifyContent: "center",
-    alignItems: "center",
+  chat: {
+    fontSize: 16,
   },
 });
 
