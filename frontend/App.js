@@ -26,7 +26,7 @@ export default function App() {
   return isReadyFont ? (
     <NavigationContainer>
       <JournalProvider>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />

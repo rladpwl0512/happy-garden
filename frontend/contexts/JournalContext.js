@@ -7,6 +7,7 @@ export const JournalProvider = ({ children }) => {
   const [journalText, setJournalText] = useState("");
   const [thanks, setThanks] = useState([""]);
   const [counsellingAnswer, setCounsellingAnswer] = useState("");
+  const [journals, setJournals] = useState([]);
 
   const addThanksItem = () => {
     setThanks([...thanks, ""]);
@@ -16,6 +17,11 @@ export const JournalProvider = ({ children }) => {
     const newThanks = [...thanks];
     newThanks[idx] = text;
     setThanks(newThanks);
+  };
+
+  // TODO: 위에랑 합칠 수 있을까?
+  const updateThanksArray = (arr) => {
+    setThanks(arr);
   };
 
   const deleteThanksItem = (idx) => {
@@ -43,6 +49,8 @@ export const JournalProvider = ({ children }) => {
     setCounsellingAnswer("");
   };
 
+  const getJournalData = () => {};
+
   const journalState = () => {
     return {
       selectedMood,
@@ -58,6 +66,7 @@ export const JournalProvider = ({ children }) => {
         thanks,
         addThanksItem,
         updateThanks,
+        updateThanksArray,
         deleteThanksItem,
         selectedMood,
         updateSelectedMood,

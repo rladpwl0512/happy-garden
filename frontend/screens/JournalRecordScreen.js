@@ -4,6 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "../components/CustomModal";
 import moment from "moment";
+import { deleteJournal } from "../apis/apis";
 
 function JournalRecordScreen({ navigation, route }) {
   const { counsellingAnswer, date, journalText, thanks, selectedMood } = route.params;
@@ -18,6 +19,15 @@ function JournalRecordScreen({ navigation, route }) {
   };
   const closeDeleteModal = () => {
     setIsModalVisible(false);
+  };
+
+  const deleteAJournalAndNavigate = async () => {
+    await deleteJournal(date);
+    navigation.navigate("Home"); // 반영이 안됨! 이것부터 해결!!!
+  };
+
+  const navigateUpdateScreen = () => {
+    navigation.navigate("MoodJournal", { todoUpdateDate: date, todoUpdateJournalText: journalText, todoUpdateThanks: thanks, todoUpdateSelectedMood: selectedMood });
   };
 
   return (
@@ -96,8 +106,8 @@ function JournalRecordScreen({ navigation, route }) {
             <Pressable style={[styles.modalButton, styles.grayButton]} onPress={closeDeleteModal}>
               <Text style={[styles.buttonText, styles.point]}>취소</Text>
             </Pressable>
-
-            <Pressable style={[styles.modalButton, styles.greenButton]}>
+            {/* TODO: on~ 핸들러 함수 네이밍 통일(혼자하다보니 네이밍 막 짓고있다 ㅠㅠ) */}
+            <Pressable style={[styles.modalButton, styles.greenButton]} onPress={deleteAJournalAndNavigate}>
               <Text style={[styles.buttonText, styles.point]}>삭제</Text>
             </Pressable>
           </View>
@@ -109,7 +119,7 @@ function JournalRecordScreen({ navigation, route }) {
           <Text style={[styles.buttonText, styles.point]}>삭제하기</Text>
         </Pressable>
 
-        <Pressable style={[styles.button, styles.greenButton]}>
+        <Pressable style={[styles.button, styles.greenButton]} onPress={navigateUpdateScreen}>
           <Text style={[styles.buttonText, styles.point]}>수정하기</Text>
         </Pressable>
       </View>

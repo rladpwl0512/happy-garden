@@ -145,6 +145,36 @@ app.get("/journal/mood/:month", (req, res) => {
   });
 });
 
+// 일기 삭제
+app.delete("/journal/:date", (req, res) => {
+  const date = req.params.date;
+
+  const query = `DELETE FROM journal WHERE test ->> '$.date' = ?`;
+
+  connection.query(query, [date], (error, result) => {
+    if (error) throw error;
+
+    console.log("dev: 삭제가 잘 되었습니다!");
+    res.sendStatus(200);
+  });
+});
+
+// 일기 수정
+app.put("/journal", (req, res) => {
+  const { selectedMood, journalText, thanks, counsellingAnswer, date } = req.body;
+
+  const query = 'UPDATE journal SET test = JSON_SET(test, "$.selectedMood", ?, "$.journalText", ?, "$.thanks", CAST(? AS JSON),' + ' "$.counsellingAnswer", ?) WHERE test->"$.date" = ?';
+
+  connection.query(query, [selectedMood, journalText, JSON.stringify(thanks), counsellingAnswer, date], (error, results) => {
+    if (error) throw error;
+    if (results.affectedRows > 0) {
+      res.status(200).json({ message: "성공" });
+    } else {
+      res.status(404).json({ message: "실패 (찾지못함)" });
+    }
+  });
+});
+
 const mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "127.0.0.1", //localhost

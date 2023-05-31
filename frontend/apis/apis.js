@@ -62,4 +62,36 @@ async function getJournalMood(month) {
     console.error(error);
   }
 }
-export { postCounselling, postJournal, getJournal, getJournalMood };
+
+async function deleteJournal(date) {
+  try {
+    const response = await fetch(`http://localhost:3000/journal/${date}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function updateJournal(content) {
+  try {
+    const response = await fetch(`http://localhost:3000/journal`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(content),
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { postCounselling, postJournal, getJournal, getJournalMood, deleteJournal, updateJournal };

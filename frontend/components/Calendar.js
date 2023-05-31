@@ -6,6 +6,7 @@ import colors from "../styles/theme";
 import { getJournal, getJournalMood } from "../apis/apis";
 
 function Calendar({ onPressDate, width = "100%" }) {
+  // 일기 데이터가 변경되었을 때(추가, 삭제) 리렌더링 해야함
   const [currentDate, setCurrentDate] = useState(moment());
   const [currentMonthMoods, setCurrentMonthMoods] = useState([]);
 

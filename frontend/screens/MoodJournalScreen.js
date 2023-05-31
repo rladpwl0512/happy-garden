@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable, TextInput, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
@@ -6,8 +6,10 @@ import { postCounselling } from "../apis/apis";
 import { JournalContext } from "../contexts/JournalContext";
 import moment from "moment";
 
-function MoodJournalScreen({ navigation }) {
+function MoodJournalScreen({ navigation, route }) {
+  // const { todoUpdateDate, todoUpdateJournalText, todoUpdateThanks, todoUpdateSelectedMood } = route.params;
   const { selectedMood, journalText, updateSelectedMood, updateJournalText, updateCounsellingAnswer } = useContext(JournalContext);
+
   // TODO: 헤더 페이지마다 중복되는 것 따로 빼기
   const currentDate = moment();
   moment.lang("ko", {
@@ -15,10 +17,17 @@ function MoodJournalScreen({ navigation }) {
   });
 
   const handleCompleteMoodJournal = async () => {
-    navigation.navigate("ThanksJournal");
+    navigation.navigate("ThanksJournal", { todoUpdateDate: route.params.todoUpdateDate, todoUpdateThanks: route.params.todoUpdateThanks });
     const counsellingAnswer = await postCounselling(journalText);
     await updateCounsellingAnswer(counsellingAnswer);
   };
+
+  useEffect(() => {
+    if (route.params) {
+      updateJournalText(route.params.todoUpdateJournalText);
+      updateSelectedMood(route.params.todoUpdateSelectedMood);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -28,7 +37,7 @@ function MoodJournalScreen({ navigation }) {
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>{currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
+          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dddd)") : currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <View style={styles.journalsSection}>

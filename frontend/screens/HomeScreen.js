@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, Pressable, Image, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import colors from "../styles/theme";
@@ -7,9 +7,11 @@ import Menubar from "../components/Menubar";
 import { getJournal } from "../apis/apis";
 import moment from "moment";
 import CustomModal from "../components/CustomModal";
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const isFocused = useIsFocused();
 
   const handleWriteJournalButton = async () => {
     const date = moment().format("YYYY-MM-DD");

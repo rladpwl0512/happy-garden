@@ -1,16 +1,22 @@
 import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, Image } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons"; // TODO: header 반복되는 부분 따로 뺄 수 있는지?
 import colors from "../styles/theme";
 import { JournalContext } from "../contexts/JournalContext";
 import moment from "moment";
 
-function ThanksJournalScreen({ navigation }) {
-  const { thanks, addThanksItem, updateThanks, deleteThanksItem } = useContext(JournalContext);
+function ThanksJournalScreen({ navigation, route }) {
+  const { thanks, addThanksItem, updateThanks, deleteThanksItem, updateThanksArray } = useContext(JournalContext);
   const currentDate = moment();
   moment.lang("ko", {
     weekdays: ["일", "월", "화", "수", "목", "금", "토"],
   });
+
+  useEffect(() => {
+    if (route.params) {
+      updateThanksArray(route.params.todoUpdateThanks);
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -19,7 +25,7 @@ function ThanksJournalScreen({ navigation }) {
           <Pressable onPress={() => navigation.navigate("MoodJournal")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>{currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
+          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dddd)") : currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
         </View>
 
         <View style={styles.journalSection}>
@@ -53,7 +59,7 @@ function ThanksJournalScreen({ navigation }) {
         </View>
       </View>
 
-      <Pressable style={styles.nextButton} onPress={() => navigation.navigate("JournalFeedback")}>
+      <Pressable style={styles.nextButton} onPress={() => navigation.navigate("JournalFeedback", { todoUpdateDate: route.params.todoUpdateDate })}>
         <Text style={[styles.nextButtonText, styles.point]}>작성 완료</Text>
       </Pressable>
     </View>
