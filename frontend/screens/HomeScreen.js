@@ -7,11 +7,9 @@ import Menubar from "../components/Menubar";
 import { getJournal } from "../apis/apis";
 import moment from "moment";
 import CustomModal from "../components/CustomModal";
-import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const isFocused = useIsFocused();
 
   const handleWriteJournalButton = async () => {
     const date = moment().format("YYYY-MM-DD");
@@ -39,6 +37,10 @@ function HomeScreen({ navigation }) {
     navigation.navigate("JournalRecord", JSON.parse(clickedJournalData));
   };
 
+  const navigateScreen = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -49,7 +51,7 @@ function HomeScreen({ navigation }) {
       </View>
 
       {/* TODO: 컴포넌트 분리, 행복정원, 설정에서도 가져갈 수 있도록 */}
-      <Menubar />
+      <Menubar onPressMenu={navigateScreen} />
 
       <CustomModal visible={isModalVisible} onClose={closeModal}>
         <Image style={styles.notReadyIcon} source={require("../assets/mood/happy.png")} />

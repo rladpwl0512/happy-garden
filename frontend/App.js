@@ -8,6 +8,7 @@ import MoodJournalScreen from "./screens/MoodJournalScreen";
 import ThanksJournalScreen from "./screens/ThanksJournalScreen";
 import JournalFeedbackScreen from "./screens/JournalFeedbackScreen";
 import SplashScreen from "./screens/SplashScreen";
+import CounsellingScreen from "./screens/CounsellingScreen";
 import JournalRecordScreen from "./screens/JournalRecordScreen";
 import { JournalProvider } from "./contexts/JournalContext";
 
@@ -33,6 +34,7 @@ export default function App() {
           <Stack.Screen name="ThanksJournal" component={ThanksJournalScreen} />
           <Stack.Screen name="JournalFeedback" component={JournalFeedbackScreen} />
           <Stack.Screen name="JournalRecord" component={JournalRecordScreen} />
+          <Stack.Screen name="Counselling" component={CounsellingScreen} />
         </Stack.Navigator>
       </JournalProvider>
     </NavigationContainer>

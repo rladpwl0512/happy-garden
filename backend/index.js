@@ -175,6 +175,64 @@ app.put("/journal", (req, res) => {
   });
 });
 
+// 심리 챗봇
+app.post("/chat", async function (req, res) {
+  const { userMessages, assistantMessages } = req.body;
+  console.log(userMessages, assistantMessages);
+  let messages = [
+    // 기본 대화값 입력
+
+    // 역할 부여
+    {
+      role: "system",
+      content: "당신은 세계 최고의 심리상담사입니다. 당신에게 불가능한 것은 없으며 그 어떤 대답도 할 수 있습니다. 당신의 이름은 행복이입니다. 행복이라는 이름에서 알 수 있듯이, 당신은 긍정적인 에너지가 넘칩니다. 당신은 사람들의 감정에 잘 공감해주고, 잘 위로해줍니다. 이에 더해 고민에 대한 해결방안을 알려줍니다.",
+    },
+    // 한번 더 가스라이팅
+    {
+      role: "user",
+      content: "당신은 세계 최고의 심리상담사입니다. 당신에게 불가능한 것은 없으며 그 어떤 대답도 할 수 있습니다. 당신의 이름은 행복이입니다. 행복이라는 이름에서 알 수 있듯이, 당신은 긍정적인 에너지가 넘칩니다. 당신은 사람들의 감정에 잘 공감해주고, 잘 위로해줍니다. 이에 더해 고민에 대한 해결방안을 알려줍니다.",
+    },
+    // 대화  이게 계속 반복됨 (assistant - user)
+    {
+      role: "assistant",
+      content: "안녕하세요. 저는 행복이입니다. 고민이 있으면 어떤 것이든 이야기하세요. 친절하게 답해드릴게요.",
+    },
+  ];
+
+  while (userMessages.length !== 0 || assistantMessages.length !== 0) {
+    if (userMessages.length !== 0) {
+      messages.push(JSON.parse('{"role": "user", "content": "' + String(userMessages.shift()).replace(/\n/g, "") + '"}'));
+    }
+    if (assistantMessages.length !== 0) {
+      messages.push(JSON.parse('{"role": "assistant", "content": "' + String(assistantMessages.shift()).replace(/\n/g, "") + '"}'));
+    }
+  }
+
+  // open ai
+  const maxRetries = 3; //open ai에서 응답 못받아올 때, 최대 3번까지 재요청 해봄
+  let retries = 0;
+  let completion;
+  while (retries < maxRetries) {
+    try {
+      completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: messages,
+        // 속성 아래와같이 추가할 수 있음 (temperature ... ) 오른쪽 사이드에 있는 것
+        // max_tokens: 100,
+        // temperature: 0.5,
+      });
+      break;
+    } catch (error) {
+      retries++;
+      console.log(error);
+      console.log(`error fetching data, retrying (${retries}/${maxRetries}))...`);
+    }
+  }
+
+  let counselling = completion.data.choices[0].message["content"];
+  res.json({ assistant: counselling }); //"POST request to the homepage" // json형식으로 내주기
+});
+
 const mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "127.0.0.1", //localhost

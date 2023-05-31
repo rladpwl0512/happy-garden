@@ -5,7 +5,7 @@ import colors from "../styles/theme";
 import CustomModal from "./CustomModal";
 
 // TODO: 폴더 위치
-function Menubar() {
+function Menubar({ onPressMenu }) {
   const [activeMenu, setActiveMenu] = useState("calendar");
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -15,14 +15,23 @@ function Menubar() {
   const closeNotReadyFeatureModal = () => {
     setIsModalVisible(false);
   };
+  const navigateCounsellingMenu = () => {
+    setActiveMenu("counselling");
+    onPressMenu("Counselling");
+  };
 
   return (
     <>
       <View style={styles.menubar}>
         <Pressable style={styles.iconContainer}>
-          <Image style={styles.calendarIcon} source={require("../assets/icon/calendar.png")} />
+          {activeMenu === "calendar" ? <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-active.png")} /> : <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-disable.png")} />}
 
           <Text style={[styles.normal, styles.iconText, activeMenu === "calendar" && styles.activeMenu]}>캘린더</Text>
+        </Pressable>
+
+        <Pressable style={styles.iconContainer} onPress={navigateCounsellingMenu}>
+          <Ionicons name="chatbubble" size={35} color={activeMenu === "counselling" ? colors.PRIMARY_800 : colors.PRIMARY_50} />
+          <Text style={[styles.normal, styles.iconText, activeMenu === "counselling" && styles.activeMenu]}>상담채팅</Text>
         </Pressable>
 
         <Pressable style={styles.iconContainer} onPress={showNotReadyFeatureModal}>

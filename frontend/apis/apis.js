@@ -94,4 +94,20 @@ async function updateJournal(content) {
   }
 }
 
-export { postCounselling, postJournal, getJournal, getJournalMood, deleteJournal, updateJournal };
+async function postChat(userMessages, assistantMessages) {
+  try {
+    const response = await fetch("http://localhost:3000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userMessages, assistantMessages }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { postCounselling, postJournal, getJournal, getJournalMood, deleteJournal, updateJournal, postChat };
