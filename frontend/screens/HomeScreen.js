@@ -7,9 +7,23 @@ import Menubar from "../components/Menubar";
 import { getJournal } from "../apis/apis";
 import moment from "moment";
 import CustomModal from "../components/CustomModal";
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [rerender, setRerender] = useState(0);
+  const isFocused = useIsFocused();
+
+  // TODO: cud를 한 후에 home화면으로 돌아올 때, home화면을 리렌더링 해야한다.
+  // cud 를 한 후, home 화면으로 navigation을 한다.
+  // navigation -> 인지? (useIsFocused)
+  // home 화면 컴포넌트 내의 상태값이 변경된다.
+  // home 화면이 리렌더링 된다.
+  useEffect(() => {
+    if (isFocused) {
+      setRerender(rerender + 1);
+    }
+  }, [isFocused]);
 
   const handleWriteJournalButton = async () => {
     const date = moment().format("YYYY-MM-DD");
@@ -44,7 +58,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Calendar onPressDate={navigateJournalRecordScreen} />
+        <Calendar onPressDate={navigateJournalRecordScreen} rerender={rerender} />
         <Pressable style={styles.writeJournalButton} onPress={handleWriteJournalButton}>
           <FontAwesome5 name="pen" size={25} color={colors.WHITE} />
         </Pressable>
