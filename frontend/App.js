@@ -11,6 +11,7 @@ import SplashScreen from "./screens/SplashScreen";
 import CounsellingScreen from "./screens/CounsellingScreen";
 import JournalRecordScreen from "./screens/JournalRecordScreen";
 import { JournalProvider } from "./contexts/JournalContext";
+import { MenuProvider } from "./contexts/MenuContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,15 +28,17 @@ export default function App() {
   return isReadyFont ? (
     <NavigationContainer>
       <JournalProvider>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Counselling">
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />
-          <Stack.Screen name="ThanksJournal" component={ThanksJournalScreen} />
-          <Stack.Screen name="JournalFeedback" component={JournalFeedbackScreen} />
-          <Stack.Screen name="JournalRecord" component={JournalRecordScreen} />
-          <Stack.Screen name="Counselling" component={CounsellingScreen} />
-        </Stack.Navigator>
+        <MenuProvider>
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+            <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />
+            <Stack.Screen name="ThanksJournal" component={ThanksJournalScreen} />
+            <Stack.Screen name="JournalFeedback" component={JournalFeedbackScreen} />
+            <Stack.Screen name="JournalRecord" component={JournalRecordScreen} />
+            <Stack.Screen name="Counselling" component={CounsellingScreen} />
+          </Stack.Navigator>
+        </MenuProvider>
       </JournalProvider>
     </NavigationContainer>
   ) : (

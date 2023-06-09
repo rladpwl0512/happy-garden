@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, Image, Animated, Easing } from "react-native";
 import { postChat } from "../apis/apis";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
+import Menubar from "../components/Menubar";
+import { MenuContext } from "../contexts/MenuContext";
 
 const CounsellingScreen = ({ navigation }) => {
   const [userMessages, setUserMessages] = useState([]);
@@ -10,6 +12,7 @@ const CounsellingScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [inputText, setInputText] = useState("");
   const scrollViewRef = useRef(null);
+  const { updateActiveMenu } = useContext(MenuContext);
 
   useEffect(() => {
     scrollToBottom();
@@ -99,10 +102,20 @@ const CounsellingScreen = ({ navigation }) => {
     outputRange: ["0deg", "360deg"],
   });
 
+  // TODO: util로 따로 뺴서 menubar에서 사용하도록? (지금은 menubar 사용할 때마다 이 함수를 넘겨줌)
+  const navigateScreen = (screen) => {
+    navigation.navigate(screen);
+  };
+
+  const navigateToHome = () => {
+    navigation.navigate("Home");
+    updateActiveMenu("home");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Pressable onPress={() => navigation.navigate("Home")}>
+        <Pressable onPress={navigateToHome}>
           <Image style={styles.logo} source={require("../assets/mood/happy.png")} />
         </Pressable>
       </View>
@@ -127,6 +140,7 @@ const CounsellingScreen = ({ navigation }) => {
           <Text style={styles.point}>확인</Text>
         </Pressable>
       </View>
+      <Menubar onPressMenu={navigateScreen} />
     </View>
   );
 };
@@ -149,8 +163,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   chatWindow: {
     flex: 8,
@@ -184,7 +198,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   chatInput: {
-    flex: 1,
+    flex: 1.5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

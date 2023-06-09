@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "./CustomModal";
+import { MenuContext } from "../contexts/MenuContext";
 
 // TODO: 폴더 위치
+// TODO: 스크린마다 메뉴바 가져오지 않도록 수정 -> context말고 menubar내에서 상태관리하도록 수정할 수 있을듯
+/**
+ * <home><couselling><happygarden><setting><menubar>
+ */
+
 function Menubar({ onPressMenu }) {
-  const [activeMenu, setActiveMenu] = useState("calendar");
+  const { activeMenu, updateActiveMenu } = useContext(MenuContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showNotReadyFeatureModal = () => {
@@ -16,17 +22,22 @@ function Menubar({ onPressMenu }) {
     setIsModalVisible(false);
   };
   const navigateCounsellingMenu = () => {
-    setActiveMenu("counselling");
+    updateActiveMenu("counselling");
     onPressMenu("Counselling");
+  };
+
+  const navigateHomeMenu = () => {
+    updateActiveMenu("home");
+    onPressMenu("Home");
   };
 
   return (
     <>
       <View style={styles.menubar}>
-        <Pressable style={styles.iconContainer}>
-          {activeMenu === "calendar" ? <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-active.png")} /> : <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-disable.png")} />}
+        <Pressable style={styles.iconContainer} onPress={navigateHomeMenu}>
+          {activeMenu === "home" ? <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-active.png")} /> : <Image style={styles.calendarIcon} source={require("../assets/icon/calendar-disable.png")} />}
 
-          <Text style={[styles.normal, styles.iconText, activeMenu === "calendar" && styles.activeMenu]}>캘린더</Text>
+          <Text style={[styles.normal, styles.iconText, activeMenu === "home" && styles.activeMenu]}>캘린더</Text>
         </Pressable>
 
         <Pressable style={styles.iconContainer} onPress={navigateCounsellingMenu}>
@@ -62,7 +73,8 @@ const styles = StyleSheet.create({
   },
 
   menubar: {
-    flex: 1.8,
+    // flex: 1.8,
+    height: 100,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
