@@ -4,13 +4,11 @@ import { AntDesign, Entypo } from "@expo/vector-icons"; // TODO: header 반복�
 import colors from "../styles/theme";
 import { JournalContext } from "../contexts/JournalContext";
 import moment from "moment";
+import "moment/locale/ko";
 
 function ThanksJournalScreen({ navigation, route }) {
   const { thanks, addThanksItem, updateThanks, deleteThanksItem, updateThanksArray } = useContext(JournalContext);
   const currentDate = moment();
-  moment.lang("ko", {
-    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
-  });
 
   useEffect(() => {
     if (route.params) {
@@ -25,7 +23,7 @@ function ThanksJournalScreen({ navigation, route }) {
           <Pressable onPress={() => navigation.navigate("MoodJournal")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dddd)") : currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
+          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dd)") : currentDate.format("YYYY년 M월 DD일 (dd)")}</Text>
         </View>
 
         <View style={styles.journalSection}>

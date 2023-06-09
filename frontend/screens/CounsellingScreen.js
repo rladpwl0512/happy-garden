@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView, StyleSheet, Image, Animated, Easing } from "react-native";
 import { postChat } from "../apis/apis";
-import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import colors from "../styles/theme";
 
 const CounsellingScreen = ({ navigation }) => {
   const [userMessages, setUserMessages] = useState([]);
@@ -13,6 +14,10 @@ const CounsellingScreen = ({ navigation }) => {
   useEffect(() => {
     scrollToBottom();
   }, [userMessages, assistantMessages]);
+
+  useEffect(() => {
+    startSpinnerAnimation();
+  }, [isLoading]);
 
   const scrollToBottom = () => {
     if (scrollViewRef.current) {
@@ -72,6 +77,28 @@ const CounsellingScreen = ({ navigation }) => {
     return renderedMessages;
   };
 
+  const spinValue = new Animated.Value(0);
+
+  const startSpinnerAnimation = () => {
+    if (isLoading) {
+      Animated.loop(
+        Animated.timing(spinValue, {
+          toValue: 1,
+          duration: 1500,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        })
+      ).start();
+    } else {
+      spinValue.stopAnimation();
+    }
+  };
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -86,7 +113,13 @@ const CounsellingScreen = ({ navigation }) => {
           </View>
           {renderMessages()}
         </ScrollView>
-        {isLoading && <EvilIcons name="spinner-2" size={40} color="black" />}
+        {isLoading && (
+          <View style={styles.spinnerContainer}>
+            <Animated.View style={[styles.spinner, { transform: [{ rotate: spin }] }]}>
+              <AntDesign name="loading1" size={48} color={colors.GRAY_500} />
+            </Animated.View>
+          </View>
+        )}
       </View>
       <View style={styles.chatInput}>
         <TextInput style={[styles.userInput, styles.point]} placeholder="무엇이든 말해보세요" value={inputText} onChangeText={(text) => setInputText(text)} />
@@ -174,6 +207,14 @@ const styles = StyleSheet.create({
   },
   chat: {
     fontSize: 16,
+  },
+  spinner: {
+    width: 48,
+    height: 48,
+  },
+  spinnerContainer: {
+    width: "100%",
+    alignItems: "center",
   },
 });
 

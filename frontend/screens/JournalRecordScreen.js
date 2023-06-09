@@ -4,15 +4,12 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../styles/theme";
 import CustomModal from "../components/CustomModal";
 import moment from "moment";
+import "moment/locale/ko";
 import { deleteJournal } from "../apis/apis";
 
 function JournalRecordScreen({ navigation, route }) {
   const { counsellingAnswer, date, journalText, thanks, selectedMood } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  moment.lang("ko", {
-    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
-  });
 
   const showDeleteModal = () => {
     setIsModalVisible(true);
@@ -38,7 +35,7 @@ function JournalRecordScreen({ navigation, route }) {
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>{moment(date).format("YYYY년 M월 DD일 (dddd)")}</Text>
+          <Text style={[styles.point, styles.date]}>{moment(date).format("YYYY년 M월 DD일 (dd)")}</Text>
         </View>
 
         <ScrollView>

@@ -5,16 +5,13 @@ import colors from "../styles/theme";
 import { postCounselling } from "../apis/apis";
 import { JournalContext } from "../contexts/JournalContext";
 import moment from "moment";
+import "moment/locale/ko";
 
 function MoodJournalScreen({ navigation, route }) {
-  // const { todoUpdateDate, todoUpdateJournalText, todoUpdateThanks, todoUpdateSelectedMood } = route.params;
   const { selectedMood, journalText, updateSelectedMood, updateJournalText, updateCounsellingAnswer } = useContext(JournalContext);
 
   // TODO: 헤더 페이지마다 중복되는 것 따로 빼기
   const currentDate = moment();
-  moment.lang("ko", {
-    weekdays: ["일", "월", "화", "수", "목", "금", "토"],
-  });
 
   const handleCompleteMoodJournal = async () => {
     route.params ? navigation.navigate("ThanksJournal", { todoUpdateDate: route.params.todoUpdateDate, todoUpdateThanks: route.params.todoUpdateThanks }) : navigation.navigate("ThanksJournal");
@@ -37,7 +34,7 @@ function MoodJournalScreen({ navigation, route }) {
           <Pressable onPress={() => navigation.navigate("Home")}>
             <AntDesign name="left" size={20} color="black" />
           </Pressable>
-          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dddd)") : currentDate.format("YYYY년 M월 DD일 (dddd)")}</Text>
+          <Text style={[styles.point, styles.date]}>{route.params ? moment(route.params.todoUpdateDate).format("YYYY년 M월 DD일 (dd)") : currentDate.format("YYYY년 M월 DD일 (dd)")}</Text>
         </View>
 
         <View style={styles.journalsSection}>
