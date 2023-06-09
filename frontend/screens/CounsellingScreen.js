@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 80,
+    margin: 20,
   },
   point: {
     fontFamily: "point",
@@ -169,7 +170,6 @@ const styles = StyleSheet.create({
   chatWindow: {
     flex: 8,
     maxWidth: 600,
-    margin: 20,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
@@ -215,10 +215,10 @@ const styles = StyleSheet.create({
   },
   inputButton: {
     padding: 16,
-    borderRadius: 50,
-    backgroundColor: "#f2f9ec",
-    color: "#222222",
+    borderRadius: 20,
+    backgroundColor: colors.PRIMARY_50,
   },
+
   chat: {
     fontSize: 16,
   },
