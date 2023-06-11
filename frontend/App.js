@@ -12,6 +12,10 @@ import CounsellingScreen from "./screens/CounsellingScreen";
 import JournalRecordScreen from "./screens/JournalRecordScreen";
 import { JournalProvider } from "./contexts/JournalContext";
 import { MenuProvider } from "./contexts/MenuContext";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +33,7 @@ export default function App() {
     <NavigationContainer>
       <JournalProvider>
         <MenuProvider>
-          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="MoodJournal" component={MoodJournalScreen} />
