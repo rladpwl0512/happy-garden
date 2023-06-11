@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
   spinnerContainer: {
     width: "100%",
     alignItems: "center",
+    padding: 20,
   },
 });
 

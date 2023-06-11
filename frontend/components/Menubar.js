@@ -42,7 +42,7 @@ function Menubar({ onPressMenu }) {
 
         <Pressable style={styles.iconContainer} onPress={navigateCounsellingMenu}>
           <Ionicons name="chatbubble" size={35} color={activeMenu === "counselling" ? colors.PRIMARY_800 : colors.PRIMARY_50} />
-          <Text style={[styles.normal, styles.iconText, activeMenu === "counselling" && styles.activeMenu]}>상담채팅</Text>
+          <Text style={[styles.normal, styles.iconText, activeMenu === "counselling" && styles.activeMenu]}>상담챗봇</Text>
         </Pressable>
 
         <Pressable style={styles.iconContainer} onPress={showNotReadyFeatureModal}>
